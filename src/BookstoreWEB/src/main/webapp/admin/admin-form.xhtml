@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{adminConfig.templatePath}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{adminFormMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{adminFormMB.id}" converter="javax.faces.Long"/>
+            
+            <f:event type="preRenderView" listener="#{adminFormMB.initForm()}"/>
+        </f:metadata>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p:panel styleClass="box box-primary">
+                    <h:form styleClass="form-horizontal">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="first-name" 
+                                value="#{label.firstName}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="first-name" 
+                                    value="#{adminFormMB.administrator.firstName}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="last-name" 
+                                value="#{label.lastName}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="last-name" 
+                                    value="#{adminFormMB.administrator.lastName}" 
+                                    styleClass="form-control" 
+                                    required="true"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="username" 
+                                value="#{label.username}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="username" 
+                                    value="#{adminFormMB.administrator.username}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="email" 
+                                value="#{label.email}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="email" 
+                                    value="#{adminFormMB.administrator.email}" 
+                                    styleClass="form-control" 
+                                    required="true">
+                                    <f:validator validatorId="emailVal"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="password" 
+                                value="#{label.password}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:password 
+                                    id="password" 
+                                    value="#{adminFormMB.administrator.password}" 
+                                    styleClass="form-control" 
+                                    required="#{ ! adminFormMB.editing}"
+                                    match="repeat-password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="repeat-password" 
+                                value="#{label.repeatPassword}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:password 
+                                    id="repeat-password" 
+                                    styleClass="form-control" 
+                                    value="#{adminFormMB.administrator.password}"
+                                    required="#{ ! adminFormMB.editing}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="active" 
+                                value="#{label.active}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputSwitch 
+                                    id="active" 
+                                    value="#{adminFormMB.administrator.active}" 
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <div class="pull-right">
+                                    <p:commandButton 
+                                        value="#{label.saveAdministrator}" 
+                                        ajax="false"
+                                        rendered="#{ ! adminFormMB.editing}"
+                                        action="#{adminFormMB.save()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+                                    
+                                    <p:commandButton 
+                                        value="#{label.updateAdministrator}" 
+                                        ajax="false"
+                                        rendered="#{adminFormMB.editing}"
+                                        action="#{adminFormMB.update()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+
+                                    <p:commandButton 
+                                        value="#{label.cancel}" 
+                                        action="#{adminFormMB.close()}" 
+                                        styleClass="btn btn-danger btn-flat" 
+                                        ajax="false"
+                                        icon="fa fa-times"
+                                        immediate="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

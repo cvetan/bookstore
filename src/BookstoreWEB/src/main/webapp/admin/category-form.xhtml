@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{adminConfig.templatePath}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{categoryFormMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{categoryFormMB.id}" converter="javax.faces.Long"/>
+            
+            <f:event type="preRenderView" listener="#{categoryFormMB.initForm()}"/>
+        </f:metadata>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p:panel styleClass="box box-primary">
+                    <h:form styleClass="form-horizontal">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="name" 
+                                value="#{label.categoryName}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="name" 
+                                    value="#{categoryFormMB.category.name}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="slug" 
+                                value="#{label.categorySlug}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="slug" 
+                                    value="#{categoryFormMB.category.slug}" 
+                                    styleClass="form-control" 
+                                    required="true" 
+                                    readonly="#{categoryFormMB.editing}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="parent"
+                                value="#{label.parentCategory}"
+                                styleClass="control-label col-md-4"/>
+                            
+                            <div class="col-md-8">
+                                <p:selectOneMenu value="#{categoryFormMB.category.parent}" id="parent" converter="categoryConv">
+                                    <f:selectItem itemLabel="#{label.noParent}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{categoryFormMB.formatedList}" var="category" itemValue="#{category}" itemLabel="#{category.name}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="description" 
+                                value="#{label.categoryDescription}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputTextarea 
+                                    id="description"
+                                    value="#{categoryFormMB.category.description}" 
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="title-tag" 
+                                value="#{label.titleTag}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText
+                                    id="title-tag"
+                                    value="#{categoryFormMB.category.titleTag}" 
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="description-tag" 
+                                value="#{label.descriptionTag}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputTextarea 
+                                    id="description-tag"
+                                    value="#{categoryFormMB.category.descriptionTag}" 
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <div class="pull-right">
+                                    <p:commandButton 
+                                        value="#{label.saveCategory}" 
+                                        ajax="false"
+                                        rendered="#{ ! categoryFormMB.editing}"
+                                        action="#{categoryFormMB.save()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+                                    
+                                    <p:commandButton 
+                                        value="#{label.updateCategory}" 
+                                        ajax="false"
+                                        rendered="#{categoryFormMB.editing}"
+                                        action="#{categoryFormMB.update()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+
+                                    <p:commandButton 
+                                        value="#{label.cancel}" 
+                                        action="#{categoryFormMB.close()}" 
+                                        styleClass="btn btn-danger btn-flat" 
+                                        ajax="false"
+                                        icon="fa fa-times"
+                                        immediate="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

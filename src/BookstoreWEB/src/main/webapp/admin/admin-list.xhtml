@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{adminConfig.templatePath}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{title.adminList}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-12">
+                <p:messages 
+                    globalOnly="false" 
+                    showDetail="true" 
+                    showSummary="false" 
+                    showIcon="true" />
+
+                <p:panel styleClass="card box-primary">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h:form id="admin-list-form">
+                                <p:dataTable 
+                                    var="admin" 
+                                    value="#{adminListMB.list}" 
+                                    tableStyle="table-layout: auto"
+                                    rendered="#{ ! adminListMB.list.isEmpty()}" 
+                                    rows="#{adminListMB.paginationLimit}"
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    paginatorAlwaysVisible="false" 
+                                    widgetVar="adminsTable" 
+                                    selection="#{adminListMB.selectedAdministrator}" 
+                                    selectionMode="single" 
+                                    rowKey="#{admin.id}" >
+                                    <p:ajax 
+                                        event="rowSelect" 
+                                        update="edit-admin-button delete-admin-button" 
+                                        listener="#{adminListMB.onRowSelect()}" />
+
+                                    <p:ajax
+                                        event="rowUnselect"
+                                        update="edit-admin-button delete-admin-button" 
+                                        listener="#{adminListMB.onRowUnselect()}"/>
+
+                                    <f:facet name="header">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-left">
+                                                    <p:commandButton 
+                                                        value="#{label.addAdministrator}" 
+                                                        ajax="false"
+                                                        action="#{adminListMB.openAdminForm()}" 
+                                                        styleClass="btn btn-success btn-flat" 
+                                                        icon="fa fa-plus-circle"/>
+
+                                                    <h:outputText value=" " escape="false"/>
+
+                                                    <p:commandButton 
+                                                        id="edit-admin-button"
+                                                        value="#{label.editAdministrator}" 
+                                                        ajax="false"
+                                                        action="#{adminListMB.openEditForm()}" 
+                                                        disabled="#{ ! adminListMB.selected}"
+                                                        styleClass="btn btn-warning btn-flat" 
+                                                        icon="fa fa-pencil"/>
+
+                                                    <h:outputText value=" " escape="false"/>
+
+                                                    <p:commandButton 
+                                                        id="delete-admin-button"
+                                                        value="#{label.deleteAdministrator}" 
+                                                        disabled="#{ ! adminListMB.selected}"
+                                                        oncomplete="PF('removeAdminDialog').show();" 
+                                                        update="@form"
+                                                        styleClass="btn btn-danger btn-flat" 
+                                                        icon="fa fa-trash"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </f:facet>
+
+                                    <p:column width="5%"
+                                              headerText="ID" 
+                                              filterBy="#{admin.id}" 
+                                              sortBy="#{admin.id}"
+                                              filterMatchMode="contains">
+                                        <h:outputText value="#{admin.id}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{label.firstName}" 
+                                              filterBy="#{admin.firstName}" 
+                                              sortBy="#{admin.firstName}" 
+                                              filterMatchMode="contains">
+                                        <h:outputText value="#{admin.firstName}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{label.lastName}" 
+                                              filterBy="#{admin.lastName}" 
+                                              sortBy="#{admin.lastName}" 
+                                              filterMatchMode="contains">
+                                        <h:outputText value="#{admin.lastName}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{label.username}" 
+                                              filterBy="#{admin.username}" 
+                                              sortBy="#{admin.username}" 
+                                              filterMatchMode="contains">
+                                        <h:outputText value="#{admin.username}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{label.email}" 
+                                              filterBy="#{admin.email}" 
+                                              sortBy="#{admin.email}" 
+                                              filterMatchMode="contains">
+                                        <h:outputText value="#{admin.email}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{label.active}" 
+                                              filterBy="#{admin.active}" 
+                                              filterMatchMode="equals">
+                                        <f:facet name="filter">
+                                            <p:selectOneButton onchange="PF('adminsTable').filter()">
+                                                <f:converter converterId="javax.faces.Boolean"/>
+                                                <f:selectItem itemLabel="#{label.all}" itemValue=""/>
+                                                <f:selectItem itemLabel="#{label.active}" itemValue="true" />
+                                                <f:selectItem itemLabel="#{label.inactive}" itemValue="false" />
+                                            </p:selectOneButton>
+                                        </f:facet>
+
+                                        <ui:fragment rendered="#{admin.active}">
+                                            <span class="label label-success">
+                                                Active
+                                            </span>
+                                        </ui:fragment>
+
+                                        <ui:fragment rendered="#{!admin.active}">
+                                            <span class="label label-danger">
+                                                Inactive
+                                            </span>
+                                        </ui:fragment>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+
+                            <p:dialog header="#{label.administratorRemovall}"
+                                      styleClass="box-solid box-danger" 
+                                      minHeight="100" 
+                                      modal="true"
+                                      widgetVar="removeAdminDialog"
+                                      appendTo="@(body)">
+                                <h:form>
+                                    <div>#{label.areYouSure}</div> <br/>
+
+                                    <div>
+                                        <p:commandButton 
+                                            value="#{label.confirm}" 
+                                            ajax="false"
+                                            action="#{adminListMB.delete()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            icon="fa fa-check"/>
+
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            ajax="false" 
+                                            onclick="PF('removeAdminDialog').hide(); return false;"
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-ban"/>
+                                    </div>
+                                </h:form>
+                            </p:dialog>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

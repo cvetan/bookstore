@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ul class="sidebar-menu">
+        <li>
+            <p:link href="/index.xhtml" target="_blank">
+                <i class="fa fa-home"></i>
+                <span>#{label.websitePreview}</span>
+            </p:link>
+        </li>
+
+        <li class="header">
+            #{label.websiteAdministration}
+        </li>
+
+        <li>
+            <p:link href="/admin/dashboard.xhtml">
+                <i class="fa fa-dashboard"></i>
+                <span>#{label.dashboard}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/admin-list.xhtml">
+                <i class="fa fa-user"></i>
+                <span>#{label.administrators}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/category-list.xhtml">
+                <i class="fa fa-bookmark"></i>
+                <span>#{label.categories}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/author-list.xhtml">
+                <i class="fa fa-address-book"></i>
+                <span>#{label.authors}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/book-list.xhtml">
+                <i class="fa fa-book"></i>
+                <span>#{label.books}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/order-list.xhtml">
+                <i class="fa fa-shopping-cart"></i>
+                <span>#{label.orders}</span>
+            </p:link>
+        </li>
+        
+        <li>
+            <p:link href="/admin/user-list.xhtml">
+                <i class="fa fa-user-o"></i>
+                <span>#{label.users}</span>
+            </p:link>
+        </li>
+    </ul>
+</ui:composition>

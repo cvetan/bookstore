@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{adminConfig.templatePath}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{title.authorList}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-12">
+                <p:messages 
+                    globalOnly="false" 
+                    showDetail="true" 
+                    showSummary="false" 
+                    showIcon="true" />
+                
+                <h:panelGroup 
+                    layout="block" 
+                    styleClass="alert alert-info" 
+                    rendered="#{authorListMB.list.isEmpty()}">
+                    #{message.noAuthors}
+                    <h:outputText value=" " escape="false"/>
+                    <h:link value="#{label.addAuthor}" outcome="/admin/author-form"/>
+                </h:panelGroup>
+            </div>
+
+            <div class="col-md-6">
+                <p:panel 
+                    styleClass="card box-primary" 
+                    rendered="#{ ! authorListMB.list.isEmpty()}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h:form id="category-list-form">
+                                <p:dataTable 
+                                    var="author" 
+                                    value="#{authorListMB.list}" 
+                                    tableStyle="table-layout: auto" 
+                                    rows="#{authorListMB.paginationLimit}"
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    paginatorAlwaysVisible="false" 
+                                    widgetVar="categoriesTable" 
+                                    selection="#{authorListMB.selectedAuthor}" 
+                                    selectionMode="single" 
+                                    rowKey="#{author.id}">
+                                    <p:ajax 
+                                        event="rowSelect" 
+                                        update="edit-author-button delete-author-button" 
+                                        listener="#{authorListMB.onRowSelect()}" />
+
+                                    <p:ajax
+                                        event="rowUnselect"
+                                        update="edit-author-button delete-author-button" 
+                                        listener="#{authorListMB.onRowUnselect()}"/>
+
+                                    <f:facet name="header">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-left">
+                                                    <p:commandButton 
+                                                        value="#{label.addAuthor}" 
+                                                        ajax="false"
+                                                        action="#{authorListMB.openAuthorForm()}" 
+                                                        styleClass="btn btn-success btn-flat" 
+                                                        icon="fa fa-plus-circle"/>
+
+                                                    <h:outputText value=" " escape="false"/>
+
+                                                    <p:commandButton 
+                                                        id="edit-author-button"
+                                                        value="#{label.editAuthor}" 
+                                                        ajax="false"
+                                                        action="#{authorListMB.openEditForm()}" 
+                                                        disabled="#{ ! authorListMB.selected}"
+                                                        styleClass="btn btn-warning btn-flat" 
+                                                        icon="fa fa-pencil"/>
+
+                                                    <h:outputText value=" " escape="false"/>
+
+                                                    <p:commandButton 
+                                                        id="delete-author-button"
+                                                        value="#{label.deleteAuthor}" 
+                                                        disabled="#{ ! authorListMB.selected || author.bookList.size()}"
+                                                        oncomplete="PF('removeAuthorDialog').show();" 
+                                                        update="@form"
+                                                        styleClass="btn btn-danger btn-flat" 
+                                                        icon="fa fa-trash"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </f:facet>
+
+                                    <p:column 
+                                        width="10%"
+                                        headerText="ID" 
+                                        filterBy="#{author.id}" 
+                                        sortBy="#{author.id}" 
+                                        filterMatchMode="contains">
+                                        <h:outputText value="#{author.id}"/>
+                                    </p:column>
+
+                                    <p:column 
+                                        headerText="#{label.authorName}"
+                                        filterBy="#{author.name}"
+                                        sortBy="#{author.name}"
+                                        filterMatchMode="contains">
+                                        <h:outputText value="#{author.name}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+
+                            <p:dialog header="#{label.authorRemovall}"
+                                      styleClass="box-solid box-danger" 
+                                      minHeight="100" 
+                                      modal="true"
+                                      widgetVar="removeAuthorDialog"
+                                      appendTo="@(body)">
+                                <h:form>
+                                    <div>#{label.areYouSure}</div> <br/>
+
+                                    <div>
+                                        <p:commandButton 
+                                            value="#{label.confirm}" 
+                                            ajax="false"
+                                            action="#{authorListMB.delete()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            icon="fa fa-check"/>
+
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            ajax="false" 
+                                            onclick="PF('removeAuthorDialog').hide(); return false;"
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-ban"/>
+                                    </div>
+                                </h:form>
+                            </p:dialog>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
