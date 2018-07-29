@@ -6,5 +6,28 @@
     <application>
         <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
         
+        <locale-config>
+            <default-locale>sr</default-locale>
+            
+            <supported-locale>en</supported-locale>
+            <supported-locale>sr</supported-locale>
+        </locale-config>
+        
+        <resource-bundle>
+            <base-name>com.github.cvetan.bookstore.localization.labels</base-name>
+            <var>label</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.github.cvetan.bookstore.localization.titles</base-name>
+            <var>title</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.github.cvetan.bookstore.localization.messages</base-name>
+            <var>message</var>
+        </resource-bundle>
+        
+        <message-bundle>com.github.cvetan.bookstore.localization.validatorMessages</message-bundle>
     </application>
 </faces-config>
