@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "administrators")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a")
+    @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a ORDER BY a.id DESC")
     , @NamedQuery(name = "Administrator.findById", query = "SELECT a FROM Administrator a WHERE a.id = :id")
     , @NamedQuery(name = "Administrator.findByActive", query = "SELECT a FROM Administrator a WHERE a.active = :active")
     , @NamedQuery(name = "Administrator.findByFirstName", query = "SELECT a FROM Administrator a WHERE a.firstName = :firstName")
