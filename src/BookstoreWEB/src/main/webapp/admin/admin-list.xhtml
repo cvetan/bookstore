@@ -18,8 +18,17 @@
                     showDetail="true" 
                     showSummary="false" 
                     showIcon="true" />
+                
+                <h:panelGroup 
+                    layout="block" 
+                    styleClass="alert alert-info" 
+                    rendered="#{adminListMB.list.isEmpty()}">
+                    #{message.noAdministrators}
+                    <h:outputText value=" " escape="false"/>
+                    <h:link value="#{label.addAdministrator}" outcome="/admin/admin-form"/>
+                </h:panelGroup>
 
-                <p:panel styleClass="card box-primary">
+                <p:panel styleClass="card box-primary" rendered="#{ ! adminListMB.list.isEmpty()}">
                     <div class="row">
                         <div class="col-md-12">
                             <h:form id="admin-list-form">
@@ -53,7 +62,7 @@
                                                     <p:commandButton 
                                                         value="#{label.addAdministrator}" 
                                                         ajax="false"
-                                                        action="#{adminListMB.openAdminForm()}" 
+                                                        action="#{adminListMB.openCreateForm()}" 
                                                         styleClass="btn btn-success btn-flat" 
                                                         icon="fa fa-plus-circle"/>
 
