@@ -78,8 +78,6 @@ public class Address implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;

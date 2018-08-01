@@ -8,10 +8,13 @@ package com.github.cvetan.bookstore.mb.administrator;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.sb.admin.AdministratorSBLocal;
 import com.github.cvetan.bookstore.sb.configuration.ConfigurationSBLocal;
+import com.github.cvetan.bookstore.util.Redirector;
+import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
@@ -106,7 +109,19 @@ public class AdminListMB implements Serializable {
     }
     
     public void delete() {
-        
+        try {
+            administratorSB.delete(selectedAdministrator.getId());
+            
+            selected = false;
+            
+            list.remove(selectedAdministrator);
+            
+            String message = ResourceBundleLoader.loadFromClass("messages", "adminDeleted");
+            
+            Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/admin-list?faces-redirect=true");
+        } catch (Exception ex) {
+            Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/admin-list?faces-redirect=true");
+        }
     }
     
     public void onRowSelect() {

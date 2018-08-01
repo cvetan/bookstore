@@ -8,9 +8,11 @@ package com.github.cvetan.bookstore.mb.administrator;
 import static com.github.adminfaces.template.util.Assert.has;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.sb.admin.AdministratorSBLocal;
+import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
@@ -104,7 +106,13 @@ public class AdminFormMB implements Serializable {
     }
     
     public String save() {
-        return null;
+        try {
+            administratorSB.save(administrator);
+
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/admin-list?faces-redirect=true");
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/admin-form?faces-redirect=true");
+        }
     }
     
     public String close() {
@@ -112,6 +120,12 @@ public class AdminFormMB implements Serializable {
     }
     
     public String update() {
-        return null;
+        try {
+            administratorSB.update(administrator);
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/admin-list?faces-redirect=true");
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/admin-list?faces-redirect=true");
+        }
     }
 }
