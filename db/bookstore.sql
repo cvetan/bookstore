@@ -205,7 +205,7 @@ CREATE TABLE `categories` (
   `title_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `update_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `parent` (`parent`),
@@ -421,4 +421,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-02  0:21:42
+-- Dump completed on 2018-08-02  5:21:51
