@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "categories")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c ORDER BY c.name ASC, c.parent ASC")
     , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
     , @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")
     , @NamedQuery(name = "Category.findBySlug", query = "SELECT c FROM Category c WHERE c.slug = :slug")
@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Category.findByTitleTag", query = "SELECT c FROM Category c WHERE c.titleTag = :titleTag")
     , @NamedQuery(name = "Category.findByDescriptionTag", query = "SELECT c FROM Category c WHERE c.descriptionTag = :descriptionTag")
     , @NamedQuery(name = "Category.findByCreatedAt", query = "SELECT c FROM Category c WHERE c.createdAt = :createdAt")
-    , @NamedQuery(name = "Category.findByUpdateAt", query = "SELECT c FROM Category c WHERE c.updateAt = :updateAt")})
+    , @NamedQuery(name = "Category.findByUpdatedAt", query = "SELECT c FROM Category c WHERE c.updatedAt = :updatedAt")})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -90,9 +90,9 @@ public class Category implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+    private Date updatedAt;
     
     @ManyToMany(mappedBy = "categoryList")
     private List<Book> bookList;
@@ -177,12 +177,12 @@ public class Category implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @XmlTransient
@@ -242,7 +242,7 @@ public class Category implements Serializable {
     
     @PreUpdate
     public void preUpdate() {
-        updateAt = new Date();
+        updatedAt = new Date();
     }
     
 }
