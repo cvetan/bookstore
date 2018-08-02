@@ -1,5 +1,7 @@
 package com.github.cvetan.bookstore.sb.category;
 
+import com.github.cvetan.bookstore.exceptions.category.CategoryBookFKException;
+import com.github.cvetan.bookstore.exceptions.category.CategoryParentFKException;
 import com.github.cvetan.bookstore.model.Category;
 import java.util.List;
 import javax.ejb.Local;
@@ -17,9 +19,9 @@ public interface CategorySBLocal {
     
     public void update(Category category);
     
-    public void getById(int id);
+    public Category getById(int id);
     
-    public void delete(int id);
+    public void delete(int id) throws CategoryBookFKException, CategoryParentFKException;
     
     
     
