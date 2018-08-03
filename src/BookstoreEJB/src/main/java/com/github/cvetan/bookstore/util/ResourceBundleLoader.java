@@ -8,10 +8,10 @@ import java.util.ResourceBundle;
  */
 public class ResourceBundleLoader {
     
-    private static final String rootPackage = "com.github.cvetan.bookstore.localization";
+    private static final String ROOT_PACKAGE = "com.github.cvetan.bookstore.localization";
     
     public static String loadFromClass(String className, String key) {
-        ResourceBundle bundle = ResourceBundle.getBundle(rootPackage + "." + className);
+        ResourceBundle bundle = ResourceBundle.getBundle(ROOT_PACKAGE + "." + className);
         
         return bundle.getString(key);
     }
