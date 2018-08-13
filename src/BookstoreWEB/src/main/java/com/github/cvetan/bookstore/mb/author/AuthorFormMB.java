@@ -4,6 +4,7 @@ import static com.github.adminfaces.template.util.Assert.has;
 import com.github.cvetan.bookstore.model.Author;
 import com.github.cvetan.bookstore.sb.author.AuthorSBLocal;
 import com.github.cvetan.bookstore.util.CloudinaryFacade;
+import com.github.cvetan.bookstore.util.FileUploadUtil;
 import com.github.cvetan.bookstore.util.FilesFacade;
 import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
@@ -16,7 +17,6 @@ import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.UploadedFile;
 
-
 /**
  *
  * @author cvetan
@@ -24,20 +24,20 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "authorFormMB")
 @ViewScoped
 public class AuthorFormMB implements Serializable {
-    
+
     private String title;
-    
+
     private Integer id;
-    
+
     private boolean editing;
-    
+
     private Author author;
-    
+
     private String message;
-    
+
     @EJB
     private AuthorSBLocal authorSB;
-    
+
     private UploadedFile image;
 
     /**
@@ -101,7 +101,7 @@ public class AuthorFormMB implements Serializable {
     public void setImage(UploadedFile image) {
         this.image = image;
     }
-    
+
     @PostConstruct
     public void initForm() {
         if (has(id)) {
@@ -116,34 +116,41 @@ public class AuthorFormMB implements Serializable {
             message = ResourceBundleLoader.loadFromClass("messages", "authorSaved");
         }
     }
-    
+
     public String save() {
         try {
             File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
-            
+
             author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
             author.setThumbnail(author.getImage());
-            
+
             authorSB.save(author);
-            
-            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, null);
+
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/author-list?faces-redirect=true");
         } catch (Exception ex) {
             return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true");
         }
     }
-    
+
     public String update() {
         try {
+//            if (FileUploadUtil.uploaded(image)) {
+//                File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
+//
+//                author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
+//                author.setThumbnail(author.getImage());
+//            }
+
             authorSB.update(author);
-            
+
             return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/author-list?faces-redirect=true");
         } catch (Exception ex) {
-            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true");
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true&id=" + author.getId());
         }
     }
-    
+
     public String close() {
         return "/admin/author-list?faces-redirect=true";
     }
-    
+
 }
