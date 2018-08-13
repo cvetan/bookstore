@@ -18,16 +18,16 @@
         </f:metadata>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <p:panel styleClass="box box-primary">
                     <h:form styleClass="form-horizontal">
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="name" 
                                 value="#{label.categoryName}" 
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p:inputText 
                                     id="name" 
                                     value="#{categoryFormMB.category.name}" 
@@ -40,9 +40,9 @@
                             <p:outputLabel 
                                 for="slug" 
                                 value="#{label.categorySlug}" 
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p:inputText 
                                     id="slug" 
                                     value="#{categoryFormMB.category.slug}" 
@@ -56,9 +56,9 @@
                             <p:outputLabel 
                                 for="parent"
                                 value="#{label.parentCategory}"
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
                             
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p:selectOneMenu value="#{categoryFormMB.category.parent}" id="parent" converter="categoryConv">
                                     <f:selectItem itemLabel="#{label.noParent}" itemValue="#{null}"/>
                                     <f:selectItems value="#{categoryFormMB.formatedList}" var="category" itemValue="#{category}" itemLabel="#{category.name}"/>
@@ -70,13 +70,16 @@
                             <p:outputLabel 
                                 for="description" 
                                 value="#{label.categoryDescription}" 
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
 
-                            <div class="col-md-8">
-                                <p:inputTextarea 
+                            <div class="col-md-10">
+<!--                                <p:inputTextarea 
                                     id="description"
                                     value="#{categoryFormMB.category.description}" 
-                                    styleClass="form-control"/>
+                                    styleClass="form-control"/>-->
+                                <p:textEditor 
+                                    id="description"
+                                    value="#{categoryFormMB.category.description}" height="150"/>
                             </div>
                         </div>
                         
@@ -84,9 +87,9 @@
                             <p:outputLabel 
                                 for="title-tag" 
                                 value="#{label.titleTag}" 
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p:inputText
                                     id="title-tag"
                                     value="#{categoryFormMB.category.titleTag}" 
@@ -98,9 +101,9 @@
                             <p:outputLabel 
                                 for="description-tag" 
                                 value="#{label.descriptionTag}" 
-                                styleClass="control-label col-md-4"/>
+                                styleClass="control-label col-md-2"/>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p:inputTextarea 
                                     id="description-tag"
                                     value="#{categoryFormMB.category.descriptionTag}" 
@@ -109,9 +112,9 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-4"></div>
+                            <div class="col-md-2"></div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <div class="pull-right">
                                     <p:commandButton 
                                         value="#{label.saveCategory}" 

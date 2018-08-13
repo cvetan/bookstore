@@ -25,66 +25,62 @@
                     <h:form 
                         styleClass="form-horizontal" 
                         enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ui-flat">
-                                    <p:outputLabel 
-                                        for="first-name" 
-                                        value="#{label.authorName}" 
-                                        styleClass="control-label col-md-4"/>
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="first-name" 
+                                value="#{label.authorName}" 
+                                styleClass="control-label col-md-2"/>
 
-                                    <div class="col-md-8">
-                                        <p:inputText 
-                                            id="first-name" 
-                                            value="#{authorFormMB.author.name}" 
-                                            styleClass="form-control" 
-                                            required="true" />
-                                    </div>
-                                </div>
+                            <div class="col-md-10">
+                                <p:inputText 
+                                    id="first-name" 
+                                    value="#{authorFormMB.author.name}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
 
-                                <div class="form-group ui-flat">
-                                    <p:outputLabel 
-                                        for="slug" 
-                                        value="#{label.authorSlug}" 
-                                        styleClass="control-label col-md-4"/>
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="slug" 
+                                value="#{label.authorSlug}" 
+                                styleClass="control-label col-md-2"/>
 
-                                    <div class="col-md-8">
-                                        <p:inputText 
-                                            id="slug" 
-                                            value="#{authorFormMB.author.slug}" 
-                                            styleClass="form-control" 
-                                            required="true" />
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" j:rendered="#{authorFormMB.editing}">
-                                    <p:outputLabel
-                                        for="current-image"
-                                        value="#{label.currentImage}"
-                                        styleClass="control-label col-md-4"/>
-                                    
-                                    <div class="col-md-8">
-                                        <h:graphicImage 
-                                            id="current-image" 
-                                            url="/uploads/authors/#{authorFormMB.author.image}"/>
-                                    </div>
-                                </div>
+                            <div class="col-md-10">
+                                <p:inputText 
+                                    id="slug" 
+                                    value="#{authorFormMB.author.slug}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
 
-                                <div class="form-group ui-flat">
-                                    <p:outputLabel
-                                        for="image"
-                                        value="#{label.authorImage}"
-                                        styleClass="control-label col-md-4"/>
+                        <div class="form-group" j:rendered="#{authorFormMB.editing}">
+                            <p:outputLabel
+                                for="current-image"
+                                value="#{label.currentImage}"
+                                styleClass="control-label col-md-2"/>
 
-                                    <div class="col-md-8">
-                                        <p:fileUpload 
-                                            id="image"
-                                            value="#{authorFormMB.image}"
-                                            mode="simple"
-                                            required="true"/>
+                            <div class="col-md-10">
+                                <h:graphicImage 
+                                    id="current-image" 
+                                    url="/uploads/authors/#{authorFormMB.author.image}"/>
+                            </div>
+                        </div>
 
-                                    </div>
-                                </div>
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="image"
+                                value="#{label.authorImage}"
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:fileUpload 
+                                    id="image"
+                                    value="#{authorFormMB.image}"
+                                    mode="simple"
+                                    required="true"/>
+
                             </div>
                         </div>
 

@@ -107,26 +107,6 @@
                                               filterMatchMode="contains">
                                         <h:outputText value="#{category.name}"/>
                                     </p:column>
-
-                                    <p:column headerText="#{label.categorySlug}" 
-                                              filterBy="#{category.slug}" 
-                                              sortBy="#{category.slug}" filterMatchMode="contains">
-                                        <h:outputText value="#{category.slug}"/>
-                                    </p:column>
-
-                                    <p:column headerText="#{label.lastChange}">
-                                        <h:outputText 
-                                            value="#{category.createdAt}"
-                                            rendered="#{category.updatedAt == null}">
-                                            <f:convertDateTime type="date" pattern="dd.MM.yyyy. kk:mm:ss"/>
-                                        </h:outputText>
-
-                                        <h:outputText 
-                                            value="#{category.updatedAt}"
-                                            rendered="#{category.updatedAt != null}">
-                                            <f:convertDateTime type="date" pattern="dd.MM.yyyy. kk:mm:ss"/>
-                                        </h:outputText>
-                                    </p:column>
                                 </p:dataTable>
                             </h:form>
 
