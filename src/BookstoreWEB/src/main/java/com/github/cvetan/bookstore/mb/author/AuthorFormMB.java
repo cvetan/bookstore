@@ -3,8 +3,11 @@ package com.github.cvetan.bookstore.mb.author;
 import static com.github.adminfaces.template.util.Assert.has;
 import com.github.cvetan.bookstore.model.Author;
 import com.github.cvetan.bookstore.sb.author.AuthorSBLocal;
+import com.github.cvetan.bookstore.util.CloudinaryFacade;
+import com.github.cvetan.bookstore.util.FilesFacade;
 import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
+import java.io.File;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -115,13 +118,28 @@ public class AuthorFormMB implements Serializable {
     }
     
     public String save() {
-        
-        return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, null);
+        try {
+            File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
+            
+            author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
+            author.setThumbnail(author.getImage());
+            
+            authorSB.save(author);
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, null);
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true");
+        }
     }
     
     public String update() {
-        
-        return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, null);
+        try {
+            authorSB.update(author);
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/author-list?faces-redirect=true");
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true");
+        }
     }
     
     public String close() {

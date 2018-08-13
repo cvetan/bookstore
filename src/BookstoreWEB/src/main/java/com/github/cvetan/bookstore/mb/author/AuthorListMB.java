@@ -119,7 +119,7 @@ public class AuthorListMB implements Serializable {
     }
     
     public String openEditForm() {
-        return "/admin/author-form?faces-redirect=true&" + selectedAuthor.getId();
+        return "/admin/author-form?faces-redirect=true&id=" + selectedAuthor.getId();
     }
     
     public String delete() {
