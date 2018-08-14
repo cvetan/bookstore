@@ -134,12 +134,12 @@ public class AuthorFormMB implements Serializable {
 
     public String update() {
         try {
-//            if (FileUploadUtil.uploaded(image)) {
-//                File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
-//
-//                author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
-//                author.setThumbnail(author.getImage());
-//            }
+            if (image != null) {
+                File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
+
+                author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
+                author.setThumbnail(author.getImage());
+            }
 
             authorSB.update(author);
 

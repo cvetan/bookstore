@@ -78,8 +78,7 @@
                                 <p:fileUpload 
                                     id="image"
                                     value="#{authorFormMB.image}"
-                                    mode="simple"
-                                    required="true"/>
+                                    mode="simple"/>
 
                             </div>
                         </div>
@@ -142,6 +141,7 @@
 
                                     <p:commandButton
                                         value="#{label.updateAuthor}"
+                                        ajax="false"
                                         rendered="#{authorFormMB.editing}"
                                         action="#{authorFormMB.update()}"
                                         styleClass="btn btn-success btn-flat" 
