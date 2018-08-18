@@ -29,6 +29,7 @@ CREATE TABLE `addresses` (
   `street` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `street_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `details` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -72,7 +73,7 @@ CREATE TABLE `administrators` (
   KEY `active` (`active`),
   KEY `first_name` (`first_name`),
   KEY `last_name` (`last_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +82,7 @@ CREATE TABLE `administrators` (
 
 LOCK TABLES `administrators` WRITE;
 /*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
-INSERT INTO `administrators` VALUES (1,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$Kb9hib3PrgjS8.OZDHTGcOG3.m/S8IuZHQWm9uLcGW1F.Gne0YjQG','2018-07-30 03:59:28','2018-08-02 00:09:20');
+INSERT INTO `administrators` VALUES (1,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$V0TCXdTuZj2NvfI3G0AywuXzmrQLhT3FYOuEoFqTH1RqrkoMBPrI6','2018-07-30 03:59:28','2018-08-05 14:51:29');
 /*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,8 +98,8 @@ CREATE TABLE `authors` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `thumbnail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -106,7 +107,7 @@ CREATE TABLE `authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,6 +116,7 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+INSERT INTO `authors` VALUES (2,'Džordž R. R. Martin','dzordz-rr-martin','<p class=\"ql-align-justify\">Džordž Martin rođen je 1948. u Nju Džersiju kao Džordž Rejmond Ričard Martin. Sklonost ka pisanju razvio je još kao dete, pišući priče o čudovištima i prodajući ih komšijskoj deci. Kasnije, u srednjoj školi, postao je ljubitelj stripa i predani kolekcionar, usmerivši svoje literarno delovanje na pisanje strip scenarija za različite opskurne fanzine. Prvi profesionalni ugovor sklopio je 1970, prodavši priču za strip <em>Heroj</em>.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Godine 1971. diplomirao je žurnalistiku na univerzitetu Northwestern. Nekoliko sledećih godina radio je pri administraciji okruga Kuk, organizovao šahovske turnire i bio predavač na katedri za novinarstvo univerziteta Klark u Ajovi. Tokom sedamdesetih samo je povremeno pisao.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Pošto se 1979. razveo, svu energiju usmerio je ka pisanju. Sve ostalo je legenda: za svoj literarni rad, Džordž R. R. Martin dobio je sve važnije nagrade u žanru epske fantastike, nekoliko Nebula i Hugo nagrada.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Godine 1986. seli se u Holivud, gde radi kao urednik serijala <em>Zona sumraka</em>, konsultant na scenariju za <em>Lepoticu i zver</em>, producent istog projekta, a na kraju i supervizor.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Martin danas živi u Santa Feu u Novom Meksiku. Potpredsednik je američkog udruženja SF pisaca.</p>','http://res.cloudinary.com/cvetan/image/upload/v1534285006/Bookstore/Authors/Images/220px-George_R._R._Martin_by_Gage_Skidmore_2.jpg','http://res.cloudinary.com/cvetan/image/upload/v1534285006/Bookstore/Authors/Images/220px-George_R._R._Martin_by_Gage_Skidmore_2.jpg','Džordž R. R. Martin :: Bookstore',NULL,'2018-08-14 01:33:26','2018-08-15 00:16:47');
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,8 +140,10 @@ CREATE TABLE `books` (
   `alphabet` enum('cyrillic','latin') COLLATE utf8_unicode_ci NOT NULL,
   `cover` enum('hardcover','paperback') COLLATE utf8_unicode_ci NOT NULL,
   `publish_date` date NOT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `thumbnail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbnail_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description_tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -211,7 +215,7 @@ CREATE TABLE `categories` (
   KEY `parent` (`parent`),
   KEY `name` (`name`),
   CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +224,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (3,NULL,'Istorija','istorija','Mapusaurus Limusaurus Mononychus Deinonychus Gobititan Zapsalis Pachysuchus Genusaurus Ricardoestesia Texacephale.','Istorija :: Bookstore','Nothronychus Caudipteryx Pachysuchus Wellnhoferia Protohadros Sinucerasaurus Bistahieversor Adasaurus Proplanicoxa Pawpawsaurus.','2018-08-03 00:51:38','2018-08-03 00:53:51'),(4,NULL,'Epska fantastika','epska-fantastika','<p>Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.</p><p><br></p><p><br></p>','Epska fantastika :: Bookstore','Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.','2018-08-14 00:12:24','2018-08-14 00:13:15');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,7 +290,7 @@ CREATE TABLE `order_items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(10) unsigned NOT NULL,
   `book_id` int(10) unsigned NOT NULL,
-  `item_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `item_number` int(10) unsigned NOT NULL,
   `amount` int(10) unsigned NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `total_item` decimal(10,2) NOT NULL,
@@ -294,10 +299,8 @@ CREATE TABLE `order_items` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `book_id` (`book_id`),
-  KEY `item_number` (`item_number`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
-  CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`item_number`) REFERENCES `configuration` (`item`)
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -362,7 +365,10 @@ CREATE TABLE `users` (
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbnail_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
   `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -421,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-02  5:21:51
+-- Dump completed on 2018-08-18 17:44:48
