@@ -140,6 +140,7 @@ CREATE TABLE `books` (
   `alphabet` enum('cyrillic','latin') COLLATE utf8_unicode_ci NOT NULL,
   `cover` enum('hardcover','paperback') COLLATE utf8_unicode_ci NOT NULL,
   `publish_date` date NOT NULL,
+  `sample` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -215,7 +216,7 @@ CREATE TABLE `categories` (
   KEY `parent` (`parent`),
   KEY `name` (`name`),
   CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -224,7 +225,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (3,NULL,'Istorija','istorija','Mapusaurus Limusaurus Mononychus Deinonychus Gobititan Zapsalis Pachysuchus Genusaurus Ricardoestesia Texacephale.','Istorija :: Bookstore','Nothronychus Caudipteryx Pachysuchus Wellnhoferia Protohadros Sinucerasaurus Bistahieversor Adasaurus Proplanicoxa Pawpawsaurus.','2018-08-03 00:51:38','2018-08-03 00:53:51'),(4,NULL,'Epska fantastika','epska-fantastika','<p>Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.</p><p><br></p><p><br></p>','Epska fantastika :: Bookstore','Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.','2018-08-14 00:12:24','2018-08-14 00:13:15');
+INSERT INTO `categories` VALUES (3,NULL,'Istorija','istorija','Mapusaurus Limusaurus Mononychus Deinonychus Gobititan Zapsalis Pachysuchus Genusaurus Ricardoestesia Texacephale.','Istorija :: Bookstore','Nothronychus Caudipteryx Pachysuchus Wellnhoferia Protohadros Sinucerasaurus Bistahieversor Adasaurus Proplanicoxa Pawpawsaurus.','2018-08-03 00:51:38','2018-08-03 00:53:51'),(4,NULL,'Epska fantastika','epska-fantastika','<p>Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.</p><p><br></p><p><br></p>','Epska fantastika :: Bookstore','Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.','2018-08-14 00:12:24','2018-08-14 00:13:15'),(5,3,'Istorijski romani','istorijski-romani','<p class=\"ql-align-justify\">Batyrosaurus Nurosaurus Lagosuchus Valdosaurus Haplocheirus Giraffatitan Haplocheirus Albertosaurus Galtonia Gresslyosaurus.</p>','Istorijski romani :: Bookstore','Didanodon Procerosaurus Spinops Gigantosaurus Becklespinax Diplotomodon Craspedodon Daemonosaurus Poposaurus Edmontonia.','2018-08-18 18:53:50',NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,4 +428,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-18 17:44:48
+-- Dump completed on 2018-08-18 18:59:35

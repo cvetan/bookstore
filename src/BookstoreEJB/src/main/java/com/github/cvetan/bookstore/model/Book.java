@@ -110,6 +110,10 @@ public class Book implements Serializable {
     private Date publishDate;
     
     @Size(max = 255)
+    @Column(name = "sample")
+    private String sample;
+    
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     
@@ -268,6 +272,14 @@ public class Book implements Serializable {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+    
+    public String getSample() {
+        return sample;
+    }
+    
+    public void setSample(String sample) {
+        this.sample = sample;
     }
 
     public String getImage() {
