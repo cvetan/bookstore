@@ -114,6 +114,10 @@ public class Book implements Serializable {
     private String sample;
     
     @Size(max = 255)
+    @Column(name = "sample_public_id")
+    private String samplePublicId;
+    
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     
@@ -280,6 +284,14 @@ public class Book implements Serializable {
     
     public void setSample(String sample) {
         this.sample = sample;
+    }
+    
+    public String getSamplePublicId() {
+        return samplePublicId;
+    }
+
+    public void setSamplePublicId(String samplePublicId) {
+        this.samplePublicId = samplePublicId;
     }
 
     public String getImage() {

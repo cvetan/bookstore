@@ -107,7 +107,7 @@ CREATE TABLE `authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
-INSERT INTO `authors` VALUES (2,'Džordž R. R. Martin','dzordz-rr-martin','<p class=\"ql-align-justify\">Džordž Martin rođen je 1948. u Nju Džersiju kao Džordž Rejmond Ričard Martin. Sklonost ka pisanju razvio je još kao dete, pišući priče o čudovištima i prodajući ih komšijskoj deci. Kasnije, u srednjoj školi, postao je ljubitelj stripa i predani kolekcionar, usmerivši svoje literarno delovanje na pisanje strip scenarija za različite opskurne fanzine. Prvi profesionalni ugovor sklopio je 1970, prodavši priču za strip <em>Heroj</em>.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Godine 1971. diplomirao je žurnalistiku na univerzitetu Northwestern. Nekoliko sledećih godina radio je pri administraciji okruga Kuk, organizovao šahovske turnire i bio predavač na katedri za novinarstvo univerziteta Klark u Ajovi. Tokom sedamdesetih samo je povremeno pisao.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Pošto se 1979. razveo, svu energiju usmerio je ka pisanju. Sve ostalo je legenda: za svoj literarni rad, Džordž R. R. Martin dobio je sve važnije nagrade u žanru epske fantastike, nekoliko Nebula i Hugo nagrada.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Godine 1986. seli se u Holivud, gde radi kao urednik serijala <em>Zona sumraka</em>, konsultant na scenariju za <em>Lepoticu i zver</em>, producent istog projekta, a na kraju i supervizor.</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\">Martin danas živi u Santa Feu u Novom Meksiku. Potpredsednik je američkog udruženja SF pisaca.</p>','http://res.cloudinary.com/cvetan/image/upload/v1534285006/Bookstore/Authors/Images/220px-George_R._R._Martin_by_Gage_Skidmore_2.jpg','http://res.cloudinary.com/cvetan/image/upload/v1534285006/Bookstore/Authors/Images/220px-George_R._R._Martin_by_Gage_Skidmore_2.jpg','Džordž R. R. Martin :: Bookstore',NULL,'2018-08-14 01:33:26','2018-08-15 00:16:47');
+INSERT INTO `authors` VALUES (4,'Vanja Bulic','vanja-bulic','<p>Helopus Unenlagia Huabeisaurus Dryosaurus Xiongguanlong Syntarsus Neosodon Plateosaurus Neosaurus Alxasaurus.</p>','http://res.cloudinary.com/cvetan/image/upload/v1534621540/Bookstore/Authors/Images/vanja-bulic-20180818214500.jpg','Bookstore/Authors/Images/vanja-bulic-20180818214500',NULL,NULL,'2018-08-18 20:30:06','2018-08-18 21:46:51');
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,6 +141,7 @@ CREATE TABLE `books` (
   `cover` enum('hardcover','paperback') COLLATE utf8_unicode_ci NOT NULL,
   `publish_date` date NOT NULL,
   `sample` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sample_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image_public_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -428,4 +429,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-18 18:59:35
+-- Dump completed on 2018-08-18 21:56:51
