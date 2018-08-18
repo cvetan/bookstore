@@ -30,12 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderItem.findAll", query = "SELECT o FROM OrderItem o")
-    , @NamedQuery(name = "OrderItem.findById", query = "SELECT o FROM OrderItem o WHERE o.id = :id")
-    , @NamedQuery(name = "OrderItem.findByAmount", query = "SELECT o FROM OrderItem o WHERE o.amount = :amount")
-    , @NamedQuery(name = "OrderItem.findByPrice", query = "SELECT o FROM OrderItem o WHERE o.price = :price")
-    , @NamedQuery(name = "OrderItem.findByTotalItem", query = "SELECT o FROM OrderItem o WHERE o.totalItem = :totalItem")
-    , @NamedQuery(name = "OrderItem.findByCreatedAt", query = "SELECT o FROM OrderItem o WHERE o.createdAt = :createdAt")
-    , @NamedQuery(name = "OrderItem.findByUpdatedAt", query = "SELECT o FROM OrderItem o WHERE o.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "OrderItem.findById", query = "SELECT o FROM OrderItem o WHERE o.id = :id")})
 public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,8 +87,9 @@ public class OrderItem implements Serializable {
         this.id = id;
     }
 
-    public OrderItem(Integer id, int amount, BigDecimal price, BigDecimal totalItem, Date createdAt) {
+    public OrderItem(Integer id, int itemNumber, int amount, BigDecimal price, BigDecimal totalItem, Date createdAt) {
         this.id = id;
+        this.itemNumber = itemNumber;
         this.amount = amount;
         this.price = price;
         this.totalItem = totalItem;
@@ -107,11 +103,11 @@ public class OrderItem implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public int getItemNumber() {
         return itemNumber;
     }
-    
+
     public void setItemNumber(int itemNumber) {
         this.itemNumber = itemNumber;
     }
@@ -181,26 +177,26 @@ public class OrderItem implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof OrderItem)) {
+        if (!(object instanceof OrderItem)) {
             return false;
         }
         
         OrderItem other = (OrderItem) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return itemNumber + ". " + book.getTitle();
+        return itemNumber + "." + book;
     }
     
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

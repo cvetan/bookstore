@@ -39,21 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b")
     , @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id")
-    , @NamedQuery(name = "Book.findByActive", query = "SELECT b FROM Book b WHERE b.active = :active")
-    , @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")
-    , @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title")
-    , @NamedQuery(name = "Book.findBySlug", query = "SELECT b FROM Book b WHERE b.slug = :slug")
-    , @NamedQuery(name = "Book.findByFormat", query = "SELECT b FROM Book b WHERE b.format = :format")
-    , @NamedQuery(name = "Book.findByPageNumber", query = "SELECT b FROM Book b WHERE b.pageNumber = :pageNumber")
-    , @NamedQuery(name = "Book.findByAlphabet", query = "SELECT b FROM Book b WHERE b.alphabet = :alphabet")
-    , @NamedQuery(name = "Book.findByCover", query = "SELECT b FROM Book b WHERE b.cover = :cover")
-    , @NamedQuery(name = "Book.findByPublishDate", query = "SELECT b FROM Book b WHERE b.publishDate = :publishDate")
-    , @NamedQuery(name = "Book.findByImage", query = "SELECT b FROM Book b WHERE b.image = :image")
-    , @NamedQuery(name = "Book.findByThumbnail", query = "SELECT b FROM Book b WHERE b.thumbnail = :thumbnail")
-    , @NamedQuery(name = "Book.findByTitleTag", query = "SELECT b FROM Book b WHERE b.titleTag = :titleTag")
-    , @NamedQuery(name = "Book.findByDescriptionTag", query = "SELECT b FROM Book b WHERE b.descriptionTag = :descriptionTag")
-    , @NamedQuery(name = "Book.findByCreatedAt", query = "SELECT b FROM Book b WHERE b.createdAt = :createdAt")
-    , @NamedQuery(name = "Book.findByUpdatedAt", query = "SELECT b FROM Book b WHERE b.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "Book.findBySlug", query = "SELECT b FROM Book b WHERE b.slug = :slug")})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -123,17 +109,21 @@ public class Book implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date publishDate;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
+    @Column(name = "image_public_id")
+    private String imagePublicId;
+    
+    @Size(max = 255)
     @Column(name = "thumbnail")
     private String thumbnail;
+    
+    @Size(max = 255)
+    @Column(name = "thumbnail_public_id")
+    private String thumbnailPublicId;
     
     @Size(max = 255)
     @Column(name = "title_tag")
@@ -153,7 +143,7 @@ public class Book implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     
-    @ManyToMany(mappedBy = "wishlist")
+    @ManyToMany(mappedBy = "bookList")
     private List<User> userList;
     
     @JoinTable(name = "books_categories", joinColumns = {
@@ -170,8 +160,6 @@ public class Book implements Serializable {
     private List<OrderItem> orderItemList;
 
     public Book() {
-        userList = new ArrayList<>();
-        categoryList = new ArrayList<>();
         orderItemList = new ArrayList<>();
     }
 
@@ -179,7 +167,7 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public Book(Integer id, boolean active, String isbn, String title, String slug, String description, String format, int pageNumber, String alphabet, String cover, Date publishDate, String image, String thumbnail, Date createdAt) {
+    public Book(Integer id, boolean active, String isbn, String title, String slug, String description, String format, int pageNumber, String alphabet, String cover, Date publishDate, Date createdAt) {
         this.id = id;
         this.active = active;
         this.isbn = isbn;
@@ -191,8 +179,6 @@ public class Book implements Serializable {
         this.alphabet = alphabet;
         this.cover = cover;
         this.publishDate = publishDate;
-        this.image = image;
-        this.thumbnail = thumbnail;
         this.createdAt = createdAt;
     }
 
@@ -292,12 +278,28 @@ public class Book implements Serializable {
         this.image = image;
     }
 
+    public String getImagePublicId() {
+        return imagePublicId;
+    }
+
+    public void setImagePublicId(String imagePublicId) {
+        this.imagePublicId = imagePublicId;
+    }
+
     public String getThumbnail() {
         return thumbnail;
     }
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getThumbnailPublicId() {
+        return thumbnailPublicId;
+    }
+
+    public void setThumbnailPublicId(String thumbnailPublicId) {
+        this.thumbnailPublicId = thumbnailPublicId;
     }
 
     public String getTitleTag() {
@@ -376,14 +378,14 @@ public class Book implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof Book)) {
+        if (!(object instanceof Book)) {
             return false;
         }
         
         Book other = (Book) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -395,7 +397,7 @@ public class Book implements Serializable {
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

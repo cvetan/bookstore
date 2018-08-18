@@ -31,72 +31,64 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "administrators")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a ORDER BY a.id DESC")
-    , @NamedQuery(name = "Administrator.findById", query = "SELECT a FROM Administrator a WHERE a.id = :id")
-    , @NamedQuery(name = "Administrator.findByActive", query = "SELECT a FROM Administrator a WHERE a.active = :active")
-    , @NamedQuery(name = "Administrator.findByFirstName", query = "SELECT a FROM Administrator a WHERE a.firstName = :firstName")
-    , @NamedQuery(name = "Administrator.findByLastName", query = "SELECT a FROM Administrator a WHERE a.lastName = :lastName")
-    , @NamedQuery(name = "Administrator.findByUsername", query = "SELECT a FROM Administrator a WHERE a.username = :username")
-    , @NamedQuery(name = "Administrator.findByEmail", query = "SELECT a FROM Administrator a WHERE a.email = :email")
-    , @NamedQuery(name = "Administrator.findByPassword", query = "SELECT a FROM Administrator a WHERE a.password = :password")
-    , @NamedQuery(name = "Administrator.findByCreatedAt", query = "SELECT a FROM Administrator a WHERE a.createdAt = :createdAt")
-    , @NamedQuery(name = "Administrator.findByUpdatedAt", query = "SELECT a FROM Administrator a WHERE a.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a")
+    , @NamedQuery(name = "Administrator.findById", query = "SELECT a FROM Administrator a WHERE a.id = :id")})
 public class Administrator implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
     private boolean active;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "first_name")
     private String firstName;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "last_name")
     private String lastName;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "username")
     private String username;
-    
+
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    
+
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    
+
     @OneToMany(mappedBy = "administrator")
     private List<OrderE> orderList;
 
@@ -108,7 +100,7 @@ public class Administrator implements Serializable {
         this.id = id;
     }
 
-    public Administrator(Integer id, boolean active, String firstName, String lastName, String username, String email, String password, Date createdAt, Date updatedAt) {
+    public Administrator(Integer id, boolean active, String firstName, String lastName, String username, String email, String password, Date createdAt) {
         this.id = id;
         this.active = active;
         this.firstName = firstName;
@@ -117,7 +109,6 @@ public class Administrator implements Serializable {
         this.email = email;
         this.password = password;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -150,6 +141,10 @@ public class Administrator implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getName() {
+        return firstName + " " + lastName;
     }
 
     public String getUsername() {
@@ -210,29 +205,29 @@ public class Administrator implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof Administrator)) {
+        if (!(object instanceof Administrator)) {
             return false;
         }
-        
+
         Administrator other = (Administrator) object;
-        
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+
+        return !((this.id == null && other.id != null)
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + "[" + username + "]";
+        return getName() + "[" + username + "]";
     }
-    
+
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();
     }
-    
+
 }

@@ -35,14 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a")
     , @NamedQuery(name = "Author.findById", query = "SELECT a FROM Author a WHERE a.id = :id")
-    , @NamedQuery(name = "Author.findByName", query = "SELECT a FROM Author a WHERE a.name = :name")
-    , @NamedQuery(name = "Author.findBySlug", query = "SELECT a FROM Author a WHERE a.slug = :slug")
-    , @NamedQuery(name = "Author.findByImage", query = "SELECT a FROM Author a WHERE a.image = :image")
-    , @NamedQuery(name = "Author.findByThumbnail", query = "SELECT a FROM Author a WHERE a.thumbnail = :thumbnail")
-    , @NamedQuery(name = "Author.findByTitleTag", query = "SELECT a FROM Author a WHERE a.titleTag = :titleTag")
-    , @NamedQuery(name = "Author.findByDescriptionTag", query = "SELECT a FROM Author a WHERE a.descriptionTag = :descriptionTag")
-    , @NamedQuery(name = "Author.findByCreatedAt", query = "SELECT a FROM Author a WHERE a.createdAt = :createdAt")
-    , @NamedQuery(name = "Author.findByUpdatedAt", query = "SELECT a FROM Author a WHERE a.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "Author.findBySlug", query = "SELECT a FROM Author a WHERE a.slug = :slug")})
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,17 +65,13 @@ public class Author implements Serializable {
     @Column(name = "description")
     private String description;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "thumbnail")
-    private String thumbnail;
+    @Size(max = 255)
+    @Column(name = "image_public_id")
+    private String imagePublicId;
     
     @Size(max = 255)
     @Column(name = "title_tag")
@@ -113,13 +102,11 @@ public class Author implements Serializable {
         this.id = id;
     }
 
-    public Author(Integer id, String name, String slug, String description, String image, String thumbnail, Date createdAt) {
+    public Author(Integer id, String name, String slug, String description, Date createdAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
         this.description = description;
-        this.image = image;
-        this.thumbnail = thumbnail;
         this.createdAt = createdAt;
     }
 
@@ -163,12 +150,12 @@ public class Author implements Serializable {
         this.image = image;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public String getImagePublicId() {
+        return imagePublicId;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setImagePublicId(String imagePublicId) {
+        this.imagePublicId = imagePublicId;
     }
 
     public String getTitleTag() {
@@ -227,8 +214,8 @@ public class Author implements Serializable {
         
         Author other = (Author) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -240,9 +227,10 @@ public class Author implements Serializable {
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();
     }
+    
 }

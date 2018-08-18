@@ -36,19 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
-    , @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")
-    , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
-    , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
-    , @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")
-    , @NamedQuery(name = "User.findByBirthDate", query = "SELECT u FROM User u WHERE u.birthDate = :birthDate")
-    , @NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender")
-    , @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")
-    , @NamedQuery(name = "User.findByCreatedAt", query = "SELECT u FROM User u WHERE u.createdAt = :createdAt")
-    , @NamedQuery(name = "User.findByUpdatedAt", query = "SELECT u FROM User u WHERE u.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,11 +83,21 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    
+    @Size(max = 255)
+    @Column(name = "avatar_public_id")
+    private String avatarPublicId;
+    
+    @Size(max = 255)
+    @Column(name = "thumbnail")
+    private String thumbnail;
+    
+    @Size(max = 255)
+    @Column(name = "thumbnail_public_id")
+    private String thumbnailPublicId;
     
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
@@ -132,7 +130,7 @@ public class User implements Serializable {
         @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "book_id", referencedColumnName = "id")})
     @ManyToMany
-    private List<Book> wishlist;
+    private List<Book> bookList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Address> addressList;
@@ -141,7 +139,7 @@ public class User implements Serializable {
     private List<OrderE> orderList;
 
     public User() {
-        wishlist = new ArrayList<>();
+        bookList = new ArrayList<>();
         addressList = new ArrayList<>();
         orderList = new ArrayList<>();
     }
@@ -150,7 +148,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, boolean active, String firstName, String lastName, String username, String email, String password, String avatar, String gender, String phone, Date createdAt) {
+    public User(Integer id, boolean active, String firstName, String lastName, String username, String email, String password, String gender, String phone, Date createdAt) {
         this.id = id;
         this.active = active;
         this.firstName = firstName;
@@ -158,7 +156,6 @@ public class User implements Serializable {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.avatar = avatar;
         this.gender = gender;
         this.phone = phone;
         this.createdAt = createdAt;
@@ -195,6 +192,10 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    public String getName() {
+        return firstName + " " + lastName;
+    }
 
     public String getUsername() {
         return username;
@@ -226,6 +227,30 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAvatarPublicId() {
+        return avatarPublicId;
+    }
+
+    public void setAvatarPublicId(String avatarPublicId) {
+        this.avatarPublicId = avatarPublicId;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getThumbnailPublicId() {
+        return thumbnailPublicId;
+    }
+
+    public void setThumbnailPublicId(String thumbnailPublicId) {
+        this.thumbnailPublicId = thumbnailPublicId;
     }
 
     public Date getBirthDate() {
@@ -269,12 +294,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Book> getWishlist() {
-        return wishlist;
+    public List<Book> getBookList() {
+        return bookList;
     }
 
-    public void setWishlist(List<Book> wishlist) {
-        this.wishlist = wishlist;
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
     }
 
     @XmlTransient
@@ -310,20 +335,20 @@ public class User implements Serializable {
         
         User other = (User) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + "[" + username + "]";
+        return getName() + "[" + username + "]";
     }
     
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

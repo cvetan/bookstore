@@ -35,56 +35,55 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
-    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")
-    , @NamedQuery(name = "Address.findByStreet", query = "SELECT a FROM Address a WHERE a.street = :street")
-    , @NamedQuery(name = "Address.findByStreetNumber", query = "SELECT a FROM Address a WHERE a.streetNumber = :streetNumber")
-    , @NamedQuery(name = "Address.findByDetails", query = "SELECT a FROM Address a WHERE a.details = :details")
-    , @NamedQuery(name = "Address.findByCreatedAt", query = "SELECT a FROM Address a WHERE a.createdAt = :createdAt")
-    , @NamedQuery(name = "Address.findByUpdatedAt", query = "SELECT a FROM Address a WHERE a.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "street")
     private String street;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "street_number")
     private String streetNumber;
-    
+
     @Size(max = 255)
     @Column(name = "details")
     private String details;
-    
+
+    @Size(max = 255)
+    @Column(name = "contact_phone")
+    private String contactPhone;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    
+
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    
+
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User user;
-    
+
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private City city;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
     private List<OrderE> orderList;
 
@@ -96,12 +95,11 @@ public class Address implements Serializable {
         this.id = id;
     }
 
-    public Address(Integer id, String street, String streetNumber, Date createdAt, Date updatedAt) {
+    public Address(Integer id, String street, String streetNumber, Date createdAt) {
         this.id = id;
         this.street = street;
         this.streetNumber = streetNumber;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -134,6 +132,14 @@ public class Address implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     public Date getCreatedAt() {
@@ -186,34 +192,32 @@ public class Address implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof Address)) {
+        if (!(object instanceof Address)) {
             return false;
         }
-        
+
         Address other = (Address) object;
-        
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+
+        return !((this.id == null && other.id != null)
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return user.getFirstName() + " "
-                + user.getLastName() + "\n"
-                + street + " " 
+        return user.getName() + "\n"
+                + street + " "
                 + streetNumber + "\n"
                 + city.getPostalCode() + " "
                 + city.getName();
     }
-    
+
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();
     }
-    
 }

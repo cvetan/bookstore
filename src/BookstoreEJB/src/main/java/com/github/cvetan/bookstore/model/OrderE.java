@@ -36,12 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderE.findAll", query = "SELECT o FROM OrderE o")
-    , @NamedQuery(name = "OrderE.findById", query = "SELECT o FROM OrderE o WHERE o.id = :id")
-    , @NamedQuery(name = "OrderE.findByStatus", query = "SELECT o FROM OrderE o WHERE o.status = :status")
-    , @NamedQuery(name = "OrderE.findByProcessed", query = "SELECT o FROM OrderE o WHERE o.processed = :processed")
-    , @NamedQuery(name = "OrderE.findByOrderTotal", query = "SELECT o FROM OrderE o WHERE o.orderTotal = :orderTotal")
-    , @NamedQuery(name = "OrderE.findByCreatedAt", query = "SELECT o FROM OrderE o WHERE o.createdAt = :createdAt")
-    , @NamedQuery(name = "OrderE.findByUpdatedAt", query = "SELECT o FROM OrderE o WHERE o.updatedAt = :updatedAt")})
+    , @NamedQuery(name = "OrderE.findById", query = "SELECT o FROM OrderE o WHERE o.id = :id")})
 public class OrderE implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -200,26 +195,26 @@ public class OrderE implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof OrderE)) {
+        if (!(object instanceof OrderE)) {
             return false;
         }
         
         OrderE other = (OrderE) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return id + " - " + user.getFirstName() + " " + user.getLastName();
+        return id + " - " + user.getName();
     }
     
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

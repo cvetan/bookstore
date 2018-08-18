@@ -27,10 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cities")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "City.findAll", query = "SELECT c FROM City c ORDER BY c.name ASC")
-    , @NamedQuery(name = "City.findById", query = "SELECT c FROM City c WHERE c.id = :id")
-    , @NamedQuery(name = "City.findByPostalCode", query = "SELECT c FROM City c WHERE c.postalCode = :postalCode")
-    , @NamedQuery(name = "City.findByName", query = "SELECT c FROM City c WHERE c.name = :name")})
+    @NamedQuery(name = "City.findAll", query = "SELECT c FROM City c")
+    , @NamedQuery(name = "City.findById", query = "SELECT c FROM City c WHERE c.id = :id")})
 public class City implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -112,14 +110,14 @@ public class City implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof City)) {
+        if (!(object instanceof City)) {
             return false;
         }
         
         City other = (City) object;
         
-        return ! ((this.id == null && other.id != null) || 
-                  (this.id != null && !this.id.equals(other.id)));
+        return !((this.id == null && other.id != null) 
+                || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

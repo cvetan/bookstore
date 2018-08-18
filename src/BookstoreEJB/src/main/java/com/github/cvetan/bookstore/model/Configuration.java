@@ -78,14 +78,14 @@ public class Configuration implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if ( ! (object instanceof Configuration)) {
+        if (!(object instanceof Configuration)) {
             return false;
         }
         
         Configuration other = (Configuration) object;
         
-        return ! ((this.item == null && other.item != null) || 
-                  (this.item != null && !this.item.equals(other.item)));
+        return !((this.item == null && other.item != null) 
+                || (this.item != null && !this.item.equals(other.item)));
     }
 
     @Override
