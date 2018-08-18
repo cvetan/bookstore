@@ -9,7 +9,10 @@ import com.github.cvetan.bookstore.util.FilesFacade;
 import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -119,10 +122,15 @@ public class AuthorFormMB implements Serializable {
 
     public String save() {
         try {
-            File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
 
-            author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
-            author.setThumbnail(author.getImage());
+            if (FileUploadUtil.uploaded(image)) {
+                File file = getUploadedFile();
+                
+                Map result = CloudinaryFacade.getInstance().uploadAuthorImage(file);
+                
+                author.setImage((String) result.get("url"));
+                author.setImagePublicId((String) result.get("public_id"));
+            }
 
             authorSB.save(author);
 
@@ -134,11 +142,13 @@ public class AuthorFormMB implements Serializable {
 
     public String update() {
         try {
-            if (image != null) {
-                File uploadedFile = FilesFacade.createTempFile(image.getInputstream(), image.getFileName());
-
-                author.setImage(CloudinaryFacade.uploadAuthorImage(uploadedFile));
-                author.setThumbnail(author.getImage());
+            if (FileUploadUtil.uploaded(image)) {
+                File file = getUploadedFile();
+                
+                Map result = CloudinaryFacade.getInstance().uploadAuthorImage(file);
+                
+                author.setImage((String) result.get("url"));
+                author.setImagePublicId((String) result.get("public_id"));
             }
 
             authorSB.update(author);
@@ -147,6 +157,16 @@ public class AuthorFormMB implements Serializable {
         } catch (Exception ex) {
             return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true&id=" + author.getId());
         }
+    }
+
+    private File getUploadedFile() throws IOException {
+        String name = author.getName();
+        String filename = FileUploadUtil.generateFilename(name);
+        InputStream stream = image.getInputstream();
+        
+        File uploadedFile = FilesFacade.createTempFile(stream, filename);
+        
+        return uploadedFile;
     }
 
     public String close() {

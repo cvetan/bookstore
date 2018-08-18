@@ -51,11 +51,11 @@
                                     id="slug" 
                                     value="#{authorFormMB.author.slug}" 
                                     styleClass="form-control" 
-                                    required="true" />
+                                    readonly="#{authorFormMB.editing}"/>
                             </div>
                         </div>
 
-                        <div class="form-group" j:rendered="#{authorFormMB.editing}">
+                        <div class="form-group" j:rendered="#{authorFormMB.author.image != null}">
                             <p:outputLabel
                                 for="current-image"
                                 value="#{label.currentImage}"

@@ -1,5 +1,9 @@
 package com.github.cvetan.bookstore.util;
 
+import com.github.slugify.Slugify;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -18,5 +22,11 @@ public class FileUploadUtil {
         return (file.getSize() > 0);
     }
     
-    
+    public static String generateFilename(String base) {
+        DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        Slugify slugify = new Slugify();
+        
+        return slugify.slugify(base) + "-" + format.format(date);
+    }
 }

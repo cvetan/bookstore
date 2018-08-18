@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a")
     , @NamedQuery(name = "Author.findById", query = "SELECT a FROM Author a WHERE a.id = :id")
-    , @NamedQuery(name = "Author.findBySlug", query = "SELECT a FROM Author a WHERE a.slug = :slug")})
+    , @NamedQuery(name = "Author.findBySlug", query = "SELECT a FROM Author a WHERE a.slug = :slug")
+    , @NamedQuery(name = "Author.getSluglist", query = "SELECT a.slug FROM Author a")})
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,9 +53,8 @@ public class Author implements Serializable {
     @Column(name = "name")
     private String name;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    
+    @Size(max = 255)
     @Column(name = "slug")
     private String slug;
     

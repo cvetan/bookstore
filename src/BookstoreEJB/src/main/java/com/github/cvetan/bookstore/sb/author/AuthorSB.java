@@ -3,6 +3,7 @@ package com.github.cvetan.bookstore.sb.author;
 import com.github.cvetan.bookstore.exceptions.author.AuthorFKException;
 import com.github.cvetan.bookstore.model.Author;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
+import com.github.cvetan.bookstore.util.SlugGenerator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -21,6 +22,14 @@ public class AuthorSB extends BookstoreSB implements AuthorSBLocal {
 
     @Override
     public void save(Author author) {
+        List<String> slugList = entityManager.createNamedQuery("Author.getSluglist").getResultList();
+        
+        if (author.getSlug() == null) {
+            author.setSlug(SlugGenerator.generateSlugRaw(author.getName(), slugList));
+        } else {
+            author.setSlug(SlugGenerator.generateSlug(author.getSlug(), slugList));
+        }
+        
         entityManager.persist(author);
         
         clearCache();
