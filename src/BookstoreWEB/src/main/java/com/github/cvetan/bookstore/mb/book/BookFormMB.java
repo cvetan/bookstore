@@ -1,6 +1,7 @@
 package com.github.cvetan.bookstore.mb.book;
 
 import static com.github.adminfaces.template.util.Assert.has;
+import com.github.cvetan.bookstore.mb.category.CategoryListFormatter;
 import com.github.cvetan.bookstore.model.Author;
 import com.github.cvetan.bookstore.model.Book;
 import com.github.cvetan.bookstore.model.Category;
@@ -9,6 +10,7 @@ import com.github.cvetan.bookstore.sb.book.BookSBLocal;
 import com.github.cvetan.bookstore.sb.category.CategorySBLocal;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -34,9 +36,9 @@ public class BookFormMB implements Serializable {
     
     private String message;
     
-    private List<Category> categoryList;
-    
     private List<Author> authorList;
+    
+    private List<Category> categoryList;
     
     @EJB
     private BookSBLocal bookSB;
@@ -97,20 +99,20 @@ public class BookFormMB implements Serializable {
         this.message = message;
     }
 
-    public List<Category> getCategoryList() {
-        return categoryList;
-    }
-
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
-    }
-
     public List<Author> getAuthorList() {
         return authorList;
     }
 
     public void setAuthorList(List<Author> authorList) {
         this.authorList = authorList;
+    }
+    
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     public BookSBLocal getBookSB() {
@@ -156,7 +158,11 @@ public class BookFormMB implements Serializable {
     @PostConstruct
     public void initForm() {
         authorList = authorSB.getList();
-        categoryList = categorySB.getList();
+        
+        List<Category> rawList = categorySB.getList();
+        categoryList = new ArrayList<>();
+        
+        CategoryListFormatter.format(rawList, categoryList, 0);
         
         if (has(id)) {
             title = ResourceBundleLoader.loadFromClass("titles", "editBook");

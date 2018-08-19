@@ -51,26 +51,6 @@ public class CategoryMB {
         rawList = categorySB.getList();
         formatedList = new ArrayList<>();
         
-        formatList(rawList, 0);
-    }
-    
-    private void formatList(List<Category> rawList, int level) {
-        for (Category c: rawList) {
-            if (formatedList.contains(c)) {
-                continue;
-            }
-            
-            String name = String.join("", Collections.nCopies(level, " - "));
-            
-            name += c.getName();
-            
-            c.setName(name);
-            
-            formatedList.add(c);
-            
-            if ( ! c.getChildren().isEmpty()) {
-                formatList(c.getChildren(), level + 1);
-            }
-        }
+        CategoryListFormatter.format(rawList, formatedList, 0);
     }
 }

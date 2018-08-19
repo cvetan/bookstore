@@ -42,7 +42,7 @@
                                 </p:selectOneRadio>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="isbn" 
@@ -57,7 +57,7 @@
                                     required="true"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="first-name" 
@@ -89,6 +89,56 @@
                         </div>
                         
                         <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="author"
+                                value="#{label.bookAuthor}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:selectOneMenu
+                                    id="author"
+                                    value="#{bookFormMB.book.author}"
+                                    filter="true"
+                                    filterMatchMode="contains"
+                                    converter="authorConv">
+                                    <f:selectItems value="#{bookFormMB.authorList}" var="author" itemValue="#{author}" itemLabel="#{author.name}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="categories"
+                                value="#{label.bookCategories}"
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:selectCheckboxMenu 
+                                    id="categories"
+                                    filter="true"
+                                    filterMatchMode="contains"
+                                    label="#{label.selectCategories}"
+                                    converter="categoryConv">
+                                    <f:selectItems value="#{bookFormMB.categoryList}" var="category" itemValue="#{category}" itemLabel="#{category.name}"/>
+                                </p:selectCheckboxMenu>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="page-number"
+                                value="#{label.pageNumber}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-4">
+                                <p:inputText 
+                                    id="page-number"
+                                    value="#{bookFormMB.book.pageNumber}"
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="format" 
                                 value="#{label.bookFormat}" 
@@ -106,7 +156,7 @@
                                 </p:selectOneRadio>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="alphabet" 
@@ -125,7 +175,7 @@
                                 </p:selectOneRadio>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="cover" 
@@ -144,22 +194,50 @@
                                 </p:selectOneRadio>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel
                                 for="publish-date"
                                 value="#{label.publishDate}"
                                 styleClass="control-label col-md-2"/>
-                            
+
                             <div class="col-md-10">
                                 <p:calendar 
                                     id="publish-date"
-                                    showOn="button" 
+                                    showOn="select" 
                                     value="#{bookFormMB.book.publishDate}" 
                                     required="true"/>
                             </div>
                         </div>
                         
+                        <div class="form-group">
+                            <p:outputLabel 
+                                for="image"
+                                value="#{label.bookImage}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:fileUpload 
+                                    id="image"
+                                    value="#{bookFormMB.image}"
+                                    mode="simple"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <p:outputLabel 
+                                for="sample"
+                                value="#{label.sample}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:fileUpload 
+                                    id="sample"
+                                    value="#{bookFormMB.sample}"
+                                    mode="simple"/>
+                            </div>
+                        </div>
+
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="description" 
@@ -175,6 +253,33 @@
                             </div>
                         </div>
                         
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="title-tag"
+                                value="#{label.titleTag}"
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:inputText
+                                    id="title-tag"
+                                    value="#{bookFormMB.book.titleTag}"
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="description-tag"
+                                value="#{label.descriptionTag}"
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:inputTextarea 
+                                    id="description-tag"
+                                    value="#{bookFormMB.book.descriptionTag}"
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
 
                         <div class="form-group ui-flat">
                             <div class="col-md-2"></div>
