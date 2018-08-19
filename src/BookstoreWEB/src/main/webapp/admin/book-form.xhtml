@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:j="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{adminConfig.templatePath}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{bookFormMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{bookFormMB.id}" converter="javax.faces.Long"/>
+
+            <f:event type="preRenderView" listener="#{bookFormMB.initForm()}"/>
+        </f:metadata>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p:panel styleClass="box box-primary">
+
+                    <h:form 
+                        styleClass="form-horizontal" 
+                        enctype="multipart/form-data">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="active"
+                                value="#{label.status}"
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-4">
+                                <p:selectOneRadio 
+                                    id="active" 
+                                    value="#{bookFormMB.book.active}" 
+                                    layout="responsive" columns="2" 
+                                    required="true">
+                                    <f:selectItem itemLabel="#{label.inactive}" itemValue="#{false}"/>
+                                    <f:selectItem itemLabel="#{label.active}" itemValue="#{true}"/>
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="isbn" 
+                                value="#{label.isbn}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:inputText 
+                                    id="isbn" 
+                                    value="#{bookFormMB.book.isbn}" 
+                                    styleClass="form-control" 
+                                    required="true"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="first-name" 
+                                value="#{label.title}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:inputText 
+                                    id="first-name" 
+                                    value="#{bookFormMB.book.title}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="slug" 
+                                value="#{label.bookSlug}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:inputText 
+                                    id="slug" 
+                                    value="#{bookFormMB.book.slug}" 
+                                    styleClass="form-control" 
+                                    readonly="#{bookFormMB.editing}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="format" 
+                                value="#{label.bookFormat}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-4">
+                                <p:selectOneRadio 
+                                    id="format" 
+                                    value="#{bookFormMB.book.format}" 
+                                    layout="responsive" 
+                                    columns="2" 
+                                    required="true">
+                                    <f:selectItem itemLabel="13x20cm" itemValue="13x20cm"/>
+                                    <f:selectItem itemLabel="22x31cm" itemValue="22x31cm"/>
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="alphabet" 
+                                value="#{label.bookAlphabet}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-4">
+                                <p:selectOneRadio 
+                                    id="alphabet" 
+                                    value="#{bookFormMB.book.alphabet}" 
+                                    layout="responsive" 
+                                    columns="2" 
+                                    required="true">
+                                    <f:selectItem itemLabel="#{label.cyrilic}" itemValue="cyrilic"/>
+                                    <f:selectItem itemLabel="#{label.latin}" itemValue="latin"/>
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="cover" 
+                                value="#{label.cover}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-4">
+                                <p:selectOneRadio 
+                                    id="cover" 
+                                    value="#{bookFormMB.book.cover}" 
+                                    layout="responsive" 
+                                    columns="2" 
+                                    required="true">
+                                    <f:selectItem itemLabel="#{label.hardcover}" itemValue="hardcover"/>
+                                    <f:selectItem itemLabel="#{label.paperback}" itemValue="paperback"/>
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="publish-date"
+                                value="#{label.publishDate}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:calendar 
+                                    id="publish-date"
+                                    showOn="button" 
+                                    value="#{bookFormMB.book.publishDate}" 
+                                    required="true"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="description" 
+                                value="#{label.bookDescription}" 
+                                styleClass="control-label col-md-2"/>
+
+                            <div class="col-md-10">
+                                <p:textEditor 
+                                    id="description"
+                                    value="#{bookFormMB.book.description}"
+                                    height="150"
+                                    required="true"/>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group ui-flat">
+                            <div class="col-md-2"></div>
+
+                            <div class="col-md-10">
+                                <div class="pull-right">
+                                    <p:commandButton
+                                        value="#{label.saveBook}"
+                                        ajax="false"
+                                        rendered="#{!bookFormMB.editing}"
+                                        action="#{bookFormMB.save()}"
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+
+                                    <p:commandButton
+                                        value="#{label.updateBook}"
+                                        ajax="false"
+                                        rendered="#{bookFormMB.editing}"
+                                        action="#{bookFormMB.update()}"
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+
+                                    <p:commandButton 
+                                        value="#{label.cancel}" 
+                                        action="#{bookFormMB.close()}" 
+                                        styleClass="btn btn-danger btn-flat" 
+                                        ajax="false"
+                                        icon="fa fa-times"
+                                        immediate="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

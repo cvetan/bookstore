@@ -155,6 +155,9 @@ public class BookFormMB implements Serializable {
 
     @PostConstruct
     public void initForm() {
+        authorList = authorSB.getList();
+        categoryList = categorySB.getList();
+        
         if (has(id)) {
             title = ResourceBundleLoader.loadFromClass("titles", "editBook");
             editing = true;

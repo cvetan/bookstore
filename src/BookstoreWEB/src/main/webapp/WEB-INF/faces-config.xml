@@ -7,7 +7,7 @@
         <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
         
         <locale-config>
-            <default-locale>sr</default-locale>
+            <default-locale>en</default-locale>
             
             <supported-locale>en</supported-locale>
             <supported-locale>sr</supported-locale>
