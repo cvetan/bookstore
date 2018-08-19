@@ -23,35 +23,35 @@ public class AuthorSB extends BookstoreSB implements AuthorSBLocal {
     @Override
     public void save(Author author) {
         List<String> slugList = entityManager.createNamedQuery("Author.getSluglist").getResultList();
-        
+
         if (author.getSlug() == null) {
             author.setSlug(SlugGenerator.generateSlugRaw(author.getName(), slugList));
         } else {
             author.setSlug(SlugGenerator.generateSlug(author.getSlug(), slugList));
         }
-        
+
         entityManager.persist(author);
-        
+
         clearCache();
     }
 
     @Override
     public void update(Author author) {
         entityManager.merge(author);
-        
+
         clearCache();
     }
 
     @Override
     public void delete(int id) throws AuthorFKException {
         Author author = (Author) entityManager.find(Author.class, id);
-        
-        if ( ! author.getBookList().isEmpty()) {
+
+        if (!author.getBookList().isEmpty()) {
             throw new AuthorFKException("authorAssignedError");
         }
-        
+
         entityManager.remove(author);
-        
+
         clearCache();
     }
 
@@ -59,9 +59,9 @@ public class AuthorSB extends BookstoreSB implements AuthorSBLocal {
     public Author getById(int id) {
         Query query = entityManager.createNamedQuery("Author.findById");
         query.setParameter("id", id);
-        
+
         Author author = (Author) query.getSingleResult();
-        
+
         return author;
     }
 }

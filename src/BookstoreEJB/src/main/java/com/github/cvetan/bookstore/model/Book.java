@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "books")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b")
+    @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b ORDER BY b.id DESC")
     , @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id")
     , @NamedQuery(name = "Book.findBySlug", query = "SELECT b FROM Book b WHERE b.slug = :slug")})
 public class Book implements Serializable {
