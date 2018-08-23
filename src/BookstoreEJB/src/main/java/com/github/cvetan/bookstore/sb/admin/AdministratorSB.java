@@ -3,6 +3,8 @@ package com.github.cvetan.bookstore.sb.admin;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorOrderFKException;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
+import com.github.cvetan.bookstore.session.admin.IncorrectPasswordException;
+import com.github.cvetan.bookstore.session.admin.NoAccountException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -60,5 +62,25 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
         entityManager.remove(administrator);
 
         clearCache();
+    }
+
+    @Override
+    public Administrator login(String username, String password) throws NoAccountException, IncorrectPasswordException{
+        Query query = entityManager.createNamedQuery("Administrator.getLogin");
+        query.setParameter("username", username);
+        
+        List<Administrator> list = query.getResultList();
+        
+        if (list.isEmpty()) {
+            throw new NoAccountException("noAdminFound");
+        }
+        
+        Administrator administrator = list.get(0);
+        
+        if (!BCrypt.checkpw(password, administrator.getPassword())) {
+            throw new IncorrectPasswordException("incorrectPassword");
+        }
+        
+        return administrator;
     }
 }

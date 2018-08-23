@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Login to system :: Bookstore</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+
+        <style type="text/css">
+            div.login-logo {
+                text-align: center !important;
+            }
+        </style>
+    </h:head>
+
+    <h:body styleClass="login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <b>Bookstore</b>
+            </div>
+            <!-- /.login-logo -->
+            <div class="box login-box-body">
+                <h:form>
+                    <p class="login-box-msg">Sign in to start your session</p>
+                    
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+
+                    <div class="form-group has-feedback ui-flat">
+                        <p:inputText
+                            type="text"
+                            value="#{adminSessionMB.username}"
+                            styleClass="form-control" 
+                            placeholder="Username or email..."
+                            required="true" 
+                            requiredMessage="Username or email is required!"/>
+                        <i class="fa fa-envelope form-control-feedback" ></i>
+                    </div>
+
+                    <div class="form-group has-feedback ui-flat">
+                        <p:inputText
+                            type="password" 
+                            value="#{adminSessionMB.password}"
+                            styleClass="form-control"
+                            placeholder="Password..." 
+                            required="true" 
+                            requiredMessage="Password is required!"/>
+                        <i class="fa fa-lock form-control-feedback"></i>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p:commandButton 
+                                ajax="false"
+                                styleClass="btn btn-primary btn-block btn-flat" 
+                                action="#{adminSessionMB.login()}" 
+                                value="Login" 
+                                icon="fa fa-lock"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+    </h:body>
+</html>

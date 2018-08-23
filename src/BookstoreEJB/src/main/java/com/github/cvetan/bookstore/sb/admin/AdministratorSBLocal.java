@@ -2,6 +2,8 @@ package com.github.cvetan.bookstore.sb.admin;
 
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorOrderFKException;
 import com.github.cvetan.bookstore.model.Administrator;
+import com.github.cvetan.bookstore.session.admin.IncorrectPasswordException;
+import com.github.cvetan.bookstore.session.admin.NoAccountException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -21,4 +23,6 @@ public interface AdministratorSBLocal {
     public void update(Administrator administrator);
     
     public void delete(int id) throws AdministratorOrderFKException;
+    
+    public Administrator login(String username, String password) throws NoAccountException, IncorrectPasswordException;
 }
