@@ -73,7 +73,7 @@ CREATE TABLE `administrators` (
   KEY `active` (`active`),
   KEY `first_name` (`first_name`),
   KEY `last_name` (`last_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `administrators` (
 
 LOCK TABLES `administrators` WRITE;
 /*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
-INSERT INTO `administrators` VALUES (1,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$V0TCXdTuZj2NvfI3G0AywuXzmrQLhT3FYOuEoFqTH1RqrkoMBPrI6','2018-07-30 03:59:28','2018-08-05 14:51:29');
+INSERT INTO `administrators` VALUES (2,1,'Default','Admin','admin','admin@admin.com','$2a$10$8dORIcSCFXxlYgtMovMPWuIUhrXtf93/D0svSo132ZllJY5q0WL3q','2018-08-23 02:09:49',NULL),(3,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$h6lzAqhHyz2E0iE16sqBOOB1CjzBm0ACKqoql6okUkCsMkl69UC1q','2018-08-23 02:10:12',NULL);
 /*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,6 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
-INSERT INTO `authors` VALUES (4,'Vanja Bulic','vanja-bulic','<p>Helopus Unenlagia Huabeisaurus Dryosaurus Xiongguanlong Syntarsus Neosodon Plateosaurus Neosaurus Alxasaurus.</p>','http://res.cloudinary.com/cvetan/image/upload/v1534621540/Bookstore/Authors/Images/vanja-bulic-20180818214500.jpg','Bookstore/Authors/Images/vanja-bulic-20180818214500',NULL,NULL,'2018-08-18 20:30:06','2018-08-18 21:46:51');
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +225,6 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (3,NULL,'Istorija','istorija','Mapusaurus Limusaurus Mononychus Deinonychus Gobititan Zapsalis Pachysuchus Genusaurus Ricardoestesia Texacephale.','Istorija :: Bookstore','Nothronychus Caudipteryx Pachysuchus Wellnhoferia Protohadros Sinucerasaurus Bistahieversor Adasaurus Proplanicoxa Pawpawsaurus.','2018-08-03 00:51:38','2018-08-03 00:53:51'),(4,NULL,'Epska fantastika','epska-fantastika','<p>Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.</p><p><br></p><p><br></p>','Epska fantastika :: Bookstore','Peltosaurus Valdosaurus Ornithodesmus Ekrixinatosaurus Stereocephalus Hypselospinus Jurapteryx Antarctosaurus Iguanacolossus Coelurus.','2018-08-14 00:12:24','2018-08-14 00:13:15'),(5,3,'Istorijski romani','istorijski-romani','<p class=\"ql-align-justify\">Batyrosaurus Nurosaurus Lagosuchus Valdosaurus Haplocheirus Giraffatitan Haplocheirus Albertosaurus Galtonia Gresslyosaurus.</p>','Istorijski romani :: Bookstore','Didanodon Procerosaurus Spinops Gigantosaurus Becklespinax Diplotomodon Craspedodon Daemonosaurus Poposaurus Edmontonia.','2018-08-18 18:53:50',NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -429,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-18 21:56:51
+-- Dump completed on 2018-08-23  3:25:10

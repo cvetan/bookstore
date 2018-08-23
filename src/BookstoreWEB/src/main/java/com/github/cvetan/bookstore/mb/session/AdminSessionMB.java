@@ -61,6 +61,9 @@ public class AdminSessionMB implements Serializable {
         {
             administrator = administratorSB.login(username, password);
             
+            username = null;
+            password = null;
+            
             return Redirector.redirectWithMessage("Login successfull. Welcome back", FacesMessage.SEVERITY_INFO, "/admin/dashboard?faces-redirect=true");
             
         } catch (Exception ex) {
