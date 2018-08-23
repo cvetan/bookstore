@@ -26,7 +26,7 @@
             <!-- /.login-logo -->
             <div class="box login-box-body">
                 <h:form>
-                    <p class="login-box-msg">Sign in to start your session</p>
+                    <p class="login-box-msg">#{label.signInMessage}</p>
                     
                     <p:messages 
                         globalOnly="false" 
@@ -39,9 +39,9 @@
                             type="text"
                             value="#{adminSessionMB.username}"
                             styleClass="form-control" 
-                            placeholder="Username or email..."
+                            placeholder="#{label.usernameOrEmail}"
                             required="true" 
-                            requiredMessage="Username or email is required!"/>
+                            requiredMessage="#{message.usernameOrEmailRequired}"/>
                         <i class="fa fa-envelope form-control-feedback" ></i>
                     </div>
 
@@ -50,9 +50,9 @@
                             type="password" 
                             value="#{adminSessionMB.password}"
                             styleClass="form-control"
-                            placeholder="Password..." 
+                            placeholder="#{label.passwordLogin}" 
                             required="true" 
-                            requiredMessage="Password is required!"/>
+                            requiredMessage="#{message.passwordRequired}"/>
                         <i class="fa fa-lock form-control-feedback"></i>
                     </div>
                     <div class="row">
@@ -61,7 +61,7 @@
                                 ajax="false"
                                 styleClass="btn btn-primary btn-block btn-flat" 
                                 action="#{adminSessionMB.login()}" 
-                                value="Login" 
+                                value="#{label.login}" 
                                 icon="fa fa-lock"/>
                         </div>
                     </div>
