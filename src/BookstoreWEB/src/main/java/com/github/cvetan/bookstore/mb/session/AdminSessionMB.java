@@ -3,6 +3,7 @@ package com.github.cvetan.bookstore.mb.session;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.sb.admin.AdministratorSBLocal;
 import com.github.cvetan.bookstore.util.Redirector;
+import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -16,14 +17,14 @@ import javax.faces.application.FacesMessage;
 @Named(value = "adminSessionMB")
 @SessionScoped
 public class AdminSessionMB implements Serializable {
-    
+
     @EJB
     private AdministratorSBLocal administratorSB;
-    
+
     private String username;
-    
+
     private String password;
-    
+
     private Administrator administrator;
 
     /**
@@ -55,26 +56,29 @@ public class AdminSessionMB implements Serializable {
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
-    
+
     public String login() {
-        try
-        {
+        String message = ResourceBundleLoader.loadFromClass("messages", "loginSuccessfull");
+        String successUrl = "/admin/dashboard?faces-redirect=true";
+        String failUrl = "/admin-login?faces-redirect=true";
+
+        try {
             administrator = administratorSB.login(username, password);
-            
+
             username = null;
             password = null;
-            
-            return Redirector.redirectWithMessage("Login successfull. Welcome back", FacesMessage.SEVERITY_INFO, "/admin/dashboard?faces-redirect=true");
-            
+
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, successUrl);
+
         } catch (Exception ex) {
-            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin-login?faces-redirect=true");
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, failUrl);
         }
     }
-    
+
     public String logout() {
         administrator = null;
-        
+
         return "/admin-login?faces-redirect=true";
     }
-    
+
 }
