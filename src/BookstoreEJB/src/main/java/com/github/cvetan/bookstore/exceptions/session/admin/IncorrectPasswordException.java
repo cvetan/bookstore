@@ -1,4 +1,4 @@
-package com.github.cvetan.bookstore.session.admin;
+package com.github.cvetan.bookstore.exceptions.session.admin;
 
 import com.github.cvetan.bookstore.exceptions.BookstoreException;
 
