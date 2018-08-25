@@ -33,7 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a")
     , @NamedQuery(name = "Administrator.findById", query = "SELECT a FROM Administrator a WHERE a.id = :id")
-    , @NamedQuery(name = "Administrator.getLogin", query = "SELECT a FROM Administrator a WHERE a.username = :username OR a.email = :username")})
+    , @NamedQuery(name = "Administrator.getLogin", query = "SELECT a FROM Administrator a WHERE a.username = :username OR a.email = :username")
+    , @NamedQuery(name = "Administrator.getEmailList", query = "SELECT a.email FROM Administrator a")
+    , @NamedQuery(name = "Administrator.getEmailListUpdate", query = "SELECT a.email FROM Administrator a WHERE a.id != :id")
+    , @NamedQuery(name = "Administrator.getUsernameList", query = "SELECT a.username FROM Administrator a")
+    , @NamedQuery(name = "Administrator.getUsernameListUpdate", query = "SELECT a.username FROM Administrator a WHERE a.id != :id")})
 public class Administrator implements Serializable {
 
     private static final long serialVersionUID = 1L;

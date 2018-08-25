@@ -1,6 +1,8 @@
 package com.github.cvetan.bookstore.sb.admin;
 
+import com.github.cvetan.bookstore.exceptions.administrator.AdministratorEmailUsedException;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorOrderFKException;
+import com.github.cvetan.bookstore.exceptions.administrator.AdministratorUsernameUsedException;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
 import com.github.cvetan.bookstore.exceptions.session.admin.IncorrectPasswordException;
@@ -23,7 +25,19 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
     }
 
     @Override
-    public void save(Administrator administrator) {
+    public void save(Administrator administrator) throws AdministratorEmailUsedException, AdministratorUsernameUsedException{
+        List<String> emailList = entityManager.createNamedQuery("Administrator.getEmailList").getResultList();
+        List<String> usernameList = entityManager.createNamedQuery("Administrator.getUsernameList").getResultList();
+        
+        if (usernameList.contains(administrator.getUsername())) {
+            throw new AdministratorUsernameUsedException("administratorUsernameUsedError");
+        }
+        
+        if (emailList.contains(administrator.getEmail())) {
+            throw new AdministratorEmailUsedException("administratorEmailUsedError");
+        }
+        
+        
         administrator.setPassword(BCrypt.hashpw(administrator.getPassword(), BCrypt.gensalt()));
 
         entityManager.persist(administrator);

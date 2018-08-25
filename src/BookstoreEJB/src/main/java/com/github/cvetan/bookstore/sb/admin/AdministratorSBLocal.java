@@ -1,6 +1,8 @@
 package com.github.cvetan.bookstore.sb.admin;
 
+import com.github.cvetan.bookstore.exceptions.administrator.AdministratorEmailUsedException;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorOrderFKException;
+import com.github.cvetan.bookstore.exceptions.administrator.AdministratorUsernameUsedException;
 import com.github.cvetan.bookstore.model.Administrator;
 import com.github.cvetan.bookstore.exceptions.session.admin.IncorrectPasswordException;
 import com.github.cvetan.bookstore.exceptions.session.admin.NoAccountException;
@@ -16,7 +18,7 @@ public interface AdministratorSBLocal {
     
     public List<Administrator> getList();
     
-    public void save(Administrator administrator);
+    public void save(Administrator administrator) throws AdministratorEmailUsedException, AdministratorUsernameUsedException;
     
     public Administrator getById(int id);
     

@@ -1,146 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="#{adminConfig.templatePath}"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{adminConfig.templatePath}">
 
     <ui:define name="title">#{title.categoryList}</ui:define>
 
     <ui:define name="description"></ui:define>
 
     <ui:define name="body">
-        <div class="row">
-            <div class="col-md-12">
-                <p:messages 
-                    globalOnly="false" 
-                    showDetail="true" 
-                    showSummary="false" 
-                    showIcon="true" />
+        <p:messages 
+            globalOnly="false" 
+            showDetail="true" 
+            showSummary="false" 
+            showIcon="true" />
 
-                <h:panelGroup 
-                    layout="block" 
-                    styleClass="alert alert-info" 
-                    rendered="#{categoryListMB.formatedList.isEmpty()}">
-                    #{message.noCategories}
-                    <h:outputText value=" " escape="false"/>
-                    <h:link value="#{label.addCategory}" outcome="/admin/category-form"/>
-                </h:panelGroup>
+        <h:form>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton 
+                            action="/admin/category-form?faces-redirect=true" 
+                            icon="fa fa-plus"
+                            value="#{label.new}" 
+                            styleClass="btn btn-success btn-flat"/>
 
-                <p:panel 
-                    styleClass="card box-primary" 
-                    rendered="#{ ! categoryListMB.formatedList.isEmpty()}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h:form id="category-list-form">
-                                <p:dataTable 
-                                    var="category" 
-                                    value="#{categoryListMB.formatedList}" 
-                                    tableStyle="table-layout: auto" 
-                                    rows="#{categoryListMB.paginationLimit}"
-                                    paginator="true"
-                                    paginatorPosition="bottom"
-                                    paginatorAlwaysVisible="false" 
-                                    widgetVar="categoriesTable" 
-                                    selection="#{categoryListMB.selectedCategory}" 
-                                    selectionMode="single" 
-                                    rowKey="#{category.id}">
-                                    <p:ajax 
-                                        event="rowSelect" 
-                                        update="edit-category-button delete-category-button" 
-                                        listener="#{categoryListMB.onRowSelect()}" />
+                        <p:spacer width="5"/>
 
-                                    <p:ajax
-                                        event="rowUnselect"
-                                        update="edit-category-button delete-category-button" 
-                                        listener="#{categoryListMB.onRowUnselect()}"/>
+                        <p:commandButton 
+                            value="#{label.edit}" 
+                            action="#{categoryListMB.openEditForm()}" 
+                            disabled="#{!categoryListMB.selected}"
+                            styleClass="btn btn-warning btn-flat" 
+                            icon="fa fa-pencil"/>
 
-                                    <f:facet name="header">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="pull-left">
-                                                    <p:commandButton 
-                                                        value="#{label.addCategory}" 
-                                                        ajax="false"
-                                                        action="#{categoryListMB.openCreateForm()}" 
-                                                        styleClass="btn btn-success btn-flat" 
-                                                        icon="fa fa-plus-circle"/>
+                        <p:commandButton 
+                            value="#{label.delete}" 
+                            disabled="#{!categoryListMB.selected}"
+                            oncomplete="PF('removeCategoryDialog').show();" 
+                            update="@form"
+                            styleClass="btn btn-danger btn-flat" 
+                            icon="fa fa-trash"/>
 
-                                                    <h:outputText value=" " escape="false"/>
-
-                                                    <p:commandButton 
-                                                        id="edit-category-button"
-                                                        value="#{label.editCategory}" 
-                                                        ajax="false"
-                                                        action="#{categoryListMB.openEditForm()}" 
-                                                        disabled="#{ ! categoryListMB.selected}"
-                                                        styleClass="btn btn-warning btn-flat" 
-                                                        icon="fa fa-pencil"/>
-
-                                                    <h:outputText value=" " escape="false"/>
-
-                                                    <p:commandButton 
-                                                        id="delete-category-button"
-                                                        value="#{label.deleteCategory}" 
-                                                        disabled="#{ ! categoryListMB.selected}"
-                                                        oncomplete="PF('removeCategoryDialog').show();" 
-                                                        update="@form"
-                                                        styleClass="btn btn-danger btn-flat" 
-                                                        icon="fa fa-trash"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </f:facet>
-
-                                    <p:column width="5%"
-                                              headerText="ID" 
-                                              filterBy="#{category.id}" 
-                                              sortBy="#{category.id}" 
-                                              filterMatchMode="contains">
-                                        <h:outputText value="#{category.id}"/>
-                                    </p:column>
-
-                                    <p:column headerText="#{label.categoryName}" 
-                                              filterBy="#{category.name}" 
-                                              sortBy="#{category.name}" 
-                                              filterMatchMode="contains">
-                                        <h:outputText value="#{category.name}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </h:form>
-
-
-                            <p:dialog header="#{label.categoryRemovall}"
-                                      styleClass="box-solid box-danger" 
-                                      minHeight="100" 
-                                      modal="true"
-                                      widgetVar="removeCategoryDialog"
-                                      appendTo="@(body)">
-                                <h:form>
-                                    <div>#{label.areYouSure}</div> <br/>
-
-                                    <div>
-                                        <p:commandButton 
-                                            value="#{label.confirm}" 
-                                            ajax="false"
-                                            action="#{categoryListMB.delete()}" 
-                                            styleClass="btn btn-danger btn-flat" 
-                                            icon="fa fa-check"/>
-
-                                        <p:commandButton 
-                                            value="#{label.cancel}" 
-                                            ajax="false" 
-                                            onclick="PF('removeCategoryDialog').hide(); return false;"
-                                            styleClass="btn btn-success btn-flat" 
-                                            icon="fa fa-ban"/>
-                                    </div>
-                                </h:form>
-                            </p:dialog>
-                        </div>
+                        <p:spacer width="5"/>
                     </div>
-                </p:panel>
+
+                    <p:splitButton 
+                        value="#{label.new}" 
+                        action="/admin/category-form?faces-redirect=true"
+                        icon="fa fa-plus"
+                        styleClass="hidden-md hidden-lg btn-success btn-flat">
+                        <p:menuitem 
+                            value="#{label.edit}" 
+                            action="#{categoryListMB.openEditForm()}" 
+                            disabled="#{!categoryListMB.selected}"
+                            styleClass="btn btn-warning btn-flat"
+                            icon="fa fa-pencil">
+                        </p:menuitem>
+
+                        <p:menuitem 
+                            value="#{label.delete}" 
+                            icon="fa fa-trash" 
+                            styleClass="btn-danger btn-flat"
+                            disabled="#{!categoryListMB.selected}"
+                            action="PF('removeCategoryDialog').show();"
+                            process="@this" 
+                            update="@form"/>
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <p:dataTable 
+                        var="category" 
+                        value="#{categoryListMB.formatedList}" 
+                        tableStyle="table-layout: auto"
+                        rendered="#{!categoryListMB.formatedList.isEmpty()}" 
+                        rows="#{categoryListMB.paginationLimit}"
+                        paginator="true"
+                        paginatorPosition="bottom"
+                        paginatorAlwaysVisible="false" 
+                        widgetVar="categoriesTable" 
+                        selection="#{categoryListMB.selectedCategory}" 
+                        rowKey="#{category.id}" >
+                        <p:ajax event="rowSelectRadio" update="@(.ui-button, .ui-confirm-dialog)" listener="#{categoryListMB.onRowSelect()}"/>
+
+                        <p:column 
+                            selectionMode="single"
+                            styleClass="align-center"/>
+
+                        <p:column 
+                            width="5%"
+                            headerText="ID" 
+                            filterBy="#{category.id}" 
+                            sortBy="#{category.id}"
+                            filterMatchMode="contains">
+                            <h:outputText value="#{category.id}"/>
+                        </p:column>
+
+                        <p:column 
+                            headerText="#{label.name}" 
+                            filterBy="#{category.name}" 
+                            sortBy="#{category.name}"
+                            filterMatchMode="contains">
+                            <h:outputText value="#{category.name}"/>
+                        </p:column>
+
+                        <p:column 
+                            headerText="#{label.slug}" 
+                            filterBy="#{category.slug}" 
+                            sortBy="#{category.slug}" 
+                            filterMatchMode="contains">
+                            <h:outputText value="#{category.slug}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.bookCount}"
+                            sortBy="#{category.bookList.size()}">
+                            <h:outputText value="#{category.bookList.size()}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
             </div>
-        </div>
+        </h:form>
+
+        <p:dialog header="#{label.categoryRemovall}"
+                  styleClass="box-solid box-danger" 
+                  minHeight="100" 
+                  modal="true"
+                  widgetVar="removeCategoryDialog"
+                  appendTo="@(body)">
+            <h:form>
+                <div>#{label.areYouSure}</div> <br/>
+
+                <div>
+                    <p:commandButton 
+                        value="#{label.confirm}" 
+                        ajax="false"
+                        action="#{categoryListMB.delete()}" 
+                        styleClass="btn btn-danger btn-flat" 
+                        icon="fa fa-check"/>
+
+                    <p:commandButton 
+                        value="#{label.cancel}" 
+                        ajax="false" 
+                        onclick="PF('removeCategoryDialog').hide(); return false;"
+                        styleClass="btn btn-success btn-flat" 
+                        icon="fa fa-ban"/>
+                </div>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

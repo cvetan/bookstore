@@ -4,6 +4,7 @@ import com.github.cvetan.bookstore.exceptions.category.CategoryBookFKException;
 import com.github.cvetan.bookstore.exceptions.category.CategoryParentFKException;
 import com.github.cvetan.bookstore.model.Category;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
+import com.github.cvetan.bookstore.util.SlugGenerator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -22,6 +23,14 @@ public class CategorySB extends BookstoreSB implements CategorySBLocal {
 
     @Override
     public void save(Category category) {
+        List<String> slugList = entityManager.createNamedQuery("Category.getSlugList").getResultList();
+        
+        if (category.getSlug() == null) {
+            category.setSlug(SlugGenerator.generateSlugRaw(category.getName(), slugList));
+        } else {
+            category.setSlug(SlugGenerator.generateSlug(category.getSlug(), slugList));
+        }
+        
         entityManager.persist(category);
         
         clearCache();

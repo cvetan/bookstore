@@ -24,7 +24,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="name" 
-                                value="#{label.categoryName}" 
+                                value="#{label.name}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -39,7 +39,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="slug" 
-                                value="#{label.categorySlug}" 
+                                value="#{label.slug}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -47,7 +47,6 @@
                                     id="slug" 
                                     value="#{categoryFormMB.category.slug}" 
                                     styleClass="form-control" 
-                                    required="true" 
                                     readonly="#{categoryFormMB.editing}"/>
                             </div>
                         </div>
@@ -69,7 +68,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="description" 
-                                value="#{label.categoryDescription}" 
+                                value="#{label.description}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -112,29 +111,67 @@
 
                             <div class="col-md-10">
                                 <div class="pull-right">
-                                    <p:commandButton 
-                                        value="#{label.saveCategory}" 
-                                        ajax="false"
-                                        rendered="#{ ! categoryFormMB.editing}"
-                                        action="#{categoryFormMB.save()}" 
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                    <div class="hidden-sm hidden-xs">
+                                        <p:commandButton 
+                                            value="#{label.save}" 
+                                            ajax="false"
+                                            rendered="#{!categoryFormMB.editing}"
+                                            action="#{categoryFormMB.save()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton 
-                                        value="#{label.updateCategory}" 
-                                        ajax="false"
-                                        rendered="#{categoryFormMB.editing}"
-                                        action="#{categoryFormMB.update()}" 
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                        <p:commandButton 
+                                            value="#{label.update}" 
+                                            ajax="false"
+                                            rendered="#{categoryFormMB.editing}"
+                                            action="#{categoryFormMB.update()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton 
-                                        value="#{label.cancel}" 
-                                        action="#{categoryFormMB.close()}" 
-                                        styleClass="btn btn-danger btn-flat" 
-                                        ajax="false"
-                                        icon="fa fa-times"
-                                        immediate="true"/>
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            action="#{categoryFormMB.close()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            ajax="false"
+                                            icon="fa fa-times"
+                                            immediate="true"/>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <p:splitButton 
+                                            value="#{label.save}" 
+                                            action="#{categoryFormMB.save()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{!categoryFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{categoryFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+
+                                        <p:splitButton 
+                                            value="#{label.update}" 
+                                            action="#{categoryFormMB.update()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{categoryFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{categoryFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

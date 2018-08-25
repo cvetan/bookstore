@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
     , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
-    , @NamedQuery(name = "Category.findBySlug", query = "SELECT c FROM Category c WHERE c.slug = :slug")})
+    , @NamedQuery(name = "Category.findBySlug", query = "SELECT c FROM Category c WHERE c.slug = :slug")
+    , @NamedQuery(name = "Category.getSlugList", query = "SELECT c.slug FROM Category c")})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +54,6 @@ public class Category implements Serializable {
     @Column(name = "name")
     private String name;
     
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "slug")
     private String slug;
