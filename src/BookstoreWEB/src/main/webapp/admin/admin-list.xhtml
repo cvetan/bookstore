@@ -76,10 +76,11 @@
                         paginatorAlwaysVisible="false" 
                         widgetVar="adminsTable" 
                         selection="#{adminListMB.selectedAdministrator}" 
-                        selectionMode="single" 
                         rowKey="#{admin.id}" >
-                        <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)" listener="#{adminListMB.onRowSelect()}"/>
-                        <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)" listener="#{adminListMB.onRowUnselect()}"/>
+                        <p:ajax event="rowSelectRadio" update="@(.ui-button, .ui-confirm-dialog)" listener="#{adminListMB.onRowSelect()}"/>
+
+                        <p:column selectionMode="single"
+                                  styleClass="align-center"/>
 
                         <p:column width="5%"
                                   headerText="ID" 
@@ -123,7 +124,6 @@
                             <f:facet name="filter">
                                 <p:selectOneButton onchange="PF('adminsTable').filter()">
                                     <f:converter converterId="javax.faces.Boolean"/>
-                                    <f:selectItem itemLabel="#{label.all}" itemValue=""/>
                                     <f:selectItem itemLabel="#{label.active}" itemValue="true" />
                                     <f:selectItem itemLabel="#{label.inactive}" itemValue="false" />
                                 </p:selectOneButton>

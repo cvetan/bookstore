@@ -123,8 +123,4 @@ public class AdminListMB implements Serializable {
         selected = true;
     }
     
-    public void onRowUnselect() {
-        selected = false;
-    }
-    
 }
