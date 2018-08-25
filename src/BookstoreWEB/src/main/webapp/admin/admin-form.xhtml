@@ -13,7 +13,7 @@
     <ui:define name="body">
         <f:metadata>
             <f:viewParam name="id" value="#{adminFormMB.id}" converter="javax.faces.Long"/>
-            
+
             <f:event type="preRenderView" listener="#{adminFormMB.initForm()}"/>
         </f:metadata>
 
@@ -133,29 +133,67 @@
 
                             <div class="col-md-8">
                                 <div class="pull-right">
-                                    <p:commandButton 
-                                        value="#{label.saveAdministrator}" 
-                                        ajax="false"
-                                        rendered="#{ ! adminFormMB.editing}"
-                                        action="#{adminFormMB.save()}" 
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
-                                    
-                                    <p:commandButton 
-                                        value="#{label.updateAdministrator}" 
-                                        ajax="false"
-                                        rendered="#{adminFormMB.editing}"
-                                        action="#{adminFormMB.update()}" 
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                    <div class="hidden-sm hidden-xs">
+                                        <p:commandButton 
+                                            value="#{label.save}" 
+                                            ajax="false"
+                                            rendered="#{ ! adminFormMB.editing}"
+                                            action="#{adminFormMB.save()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton 
-                                        value="#{label.cancel}" 
-                                        action="#{adminFormMB.close()}" 
-                                        styleClass="btn btn-danger btn-flat" 
-                                        ajax="false"
-                                        icon="fa fa-times"
-                                        immediate="true"/>
+                                        <p:commandButton 
+                                            value="#{label.update}" 
+                                            ajax="false"
+                                            rendered="#{adminFormMB.editing}"
+                                            action="#{adminFormMB.update()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
+
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            action="#{adminFormMB.close()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            ajax="false"
+                                            icon="fa fa-times"
+                                            immediate="true"/>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <p:splitButton 
+                                            value="#{label.save}" 
+                                            action="#{adminFormMB.save()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{!adminFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{adminFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+
+                                        <p:splitButton 
+                                            value="#{label.update}" 
+                                            action="#{adminFormMB.update()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{adminFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{adminFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>
