@@ -2,7 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
 
     <style type="text/css">
         #layout-menu_menu {
@@ -15,14 +16,14 @@
     </style>
     <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="fa fa-user"></span>
                 <span class="hidden-xs">#{adminSessionMB.administrator.name}</span>
             </a>
             <ul class="dropdown-menu">
                 <li class="user-header">
                     <div class="hidden-xs">
-                        <!-- ovde ide avatar mali -->
+                        <pe:gravatar value="#{adminSessionMB.administrator.email}"/>
                     </div>
                     <p>
                         #{adminSessionMB.administrator.name}
@@ -32,16 +33,20 @@
                 <li class="user-footer">
                     <h:form prependId="false">
                         <div class="pull-left">
-                            <p:commandLink 
-                                styleClass="btn btn-default btn-flat" 
-                                value="Promeni šifru"/>
+                            <p:commandButton
+                                value="#{label.editProfile}"
+                                ajax="false"
+                                action="#{adminSessionMB.editProfile()}"
+                                styleClass="btn btn-flat btn-success"
+                                icon="fa fa-user-md"/>
                         </div>
                         <div class="pull-right">
                             <p:commandButton
-                                value="Logout"
+                                value="#{label.logout}"
                                 ajax="false"
                                 action="#{adminSessionMB.logout()}"
-                                styleClass="btn btn-default btn-flat"/>
+                                icon="fa fa-sign-out"
+                                styleClass="btn btn-danger btn-flat"/>
                         </div>
                     </h:form>
                 </li>

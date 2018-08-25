@@ -80,5 +80,20 @@ public class AdminSessionMB implements Serializable {
 
         return "/admin-login?faces-redirect=true";
     }
+    
+    public String editProfile() {
+        return "/admin/admin-profile?faces-redirect=true";
+    }
+    
+    public String updateProfile() {
+        try {
+            administratorSB.update(administrator);
+            String message = ResourceBundleLoader.loadFromClass("messages", "profileUpdated");
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, null);
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, null);
+        }
+    }
 
 }
