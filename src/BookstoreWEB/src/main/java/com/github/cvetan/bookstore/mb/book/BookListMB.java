@@ -3,11 +3,13 @@ package com.github.cvetan.bookstore.mb.book;
 import com.github.cvetan.bookstore.model.Book;
 import com.github.cvetan.bookstore.sb.book.BookSBLocal;
 import com.github.cvetan.bookstore.sb.configuration.ConfigurationSBLocal;
+import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
@@ -121,8 +123,13 @@ public class BookListMB implements Serializable {
     }
     
     public String delete() {
-        
-        return "/admin/book-list?faces-redirect=true";
+        try {
+            bookSB.delete(selectedBook.getId());
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/book-list?faces-redirect=true");
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/book-list?faces-redirect=true");
+        }
     }
     
 }

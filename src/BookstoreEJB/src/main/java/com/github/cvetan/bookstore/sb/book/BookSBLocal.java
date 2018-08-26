@@ -1,6 +1,7 @@
 package com.github.cvetan.bookstore.sb.book;
 
 import com.github.cvetan.bookstore.exceptions.book.BookIsbnUsedException;
+import com.github.cvetan.bookstore.exceptions.book.BookOrderFKException;
 import com.github.cvetan.bookstore.model.Book;
 import java.util.List;
 import javax.ejb.Local;
@@ -18,7 +19,7 @@ public interface BookSBLocal {
     
     public void update(Book book);
     
-    public void delete(int id);
+    public void delete(int id) throws BookOrderFKException;
     
     public Book getById(int id);
     

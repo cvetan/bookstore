@@ -176,7 +176,7 @@
                   styleClass="box-solid box-danger" 
                   minHeight="100" 
                   modal="true"
-                  widgetVar="removeCategoryDialog"
+                  widgetVar="removeBookDialog"
                   appendTo="@(body)">
             <h:form>
                 <div>#{label.areYouSure}</div> <br/>
@@ -185,14 +185,14 @@
                     <p:commandButton 
                         value="#{label.confirm}" 
                         ajax="false"
-                        action="#{categoryListMB.delete()}" 
+                        action="#{bookListMB.delete()}" 
                         styleClass="btn btn-danger btn-flat" 
                         icon="fa fa-check"/>
 
                     <p:commandButton 
                         value="#{label.cancel}" 
                         ajax="false" 
-                        onclick="PF('removeCategoryDialog').hide(); return false;"
+                        onclick="PF('removeBookDialog').hide(); return false;"
                         styleClass="btn btn-success btn-flat" 
                         icon="fa fa-ban"/>
                 </div>
