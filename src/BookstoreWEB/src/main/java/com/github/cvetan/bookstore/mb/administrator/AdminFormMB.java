@@ -120,7 +120,7 @@ public class AdminFormMB implements Serializable {
             
             return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/admin-list?faces-redirect=true");
         } catch (Exception ex) {
-            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/admin-list?faces-redirect=true");
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/admin-form?faces-redirect=true&id=" + administrator.getId());
         }
     }
 }

@@ -22,7 +22,7 @@ public interface AdministratorSBLocal {
     
     public Administrator getById(int id);
     
-    public void update(Administrator administrator);
+    public void update(Administrator administrator) throws AdministratorEmailUsedException, AdministratorUsernameUsedException;
     
     public void delete(int id) throws AdministratorOrderFKException;
     

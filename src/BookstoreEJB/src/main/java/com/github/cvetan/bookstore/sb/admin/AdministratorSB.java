@@ -26,8 +26,8 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
 
     @Override
     public void save(Administrator administrator) throws AdministratorEmailUsedException, AdministratorUsernameUsedException{
-        List<String> emailList = entityManager.createNamedQuery("Administrator.getEmailList").getResultList();
         List<String> usernameList = entityManager.createNamedQuery("Administrator.getUsernameList").getResultList();
+        List<String> emailList = entityManager.createNamedQuery("Administrator.getEmailList").getResultList();
         
         if (usernameList.contains(administrator.getUsername())) {
             throw new AdministratorUsernameUsedException("administratorUsernameUsedError");
@@ -36,7 +36,6 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
         if (emailList.contains(administrator.getEmail())) {
             throw new AdministratorEmailUsedException("administratorEmailUsedError");
         }
-        
         
         administrator.setPassword(BCrypt.hashpw(administrator.getPassword(), BCrypt.gensalt()));
 
@@ -57,7 +56,23 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
     }
 
     @Override
-    public void update(Administrator administrator) {
+    public void update(Administrator administrator) throws AdministratorEmailUsedException, AdministratorUsernameUsedException {
+        Query query = entityManager.createNamedQuery("Administrator.getUsernameListUpdate");
+        query.setParameter("id", administrator.getId());
+        List<String> usernameList = query.getResultList();
+        
+        query = entityManager.createNamedQuery("Administrator.getEmailListUpdate");
+        query.setParameter("id", administrator.getId());
+        List<String> emailList = query.getResultList();
+        
+        if (usernameList.contains(administrator.getUsername())) {
+            throw new AdministratorUsernameUsedException("administratorUsernameUsedError");
+        }
+        
+        if (emailList.contains(administrator.getEmail())) {
+            throw new AdministratorEmailUsedException("administratorEmailUsedError");
+        }
+        
         administrator.setPassword(BCrypt.hashpw(administrator.getPassword(), BCrypt.gensalt()));
 
         entityManager.merge(administrator);
