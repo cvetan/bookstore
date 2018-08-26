@@ -1,5 +1,6 @@
 package com.github.cvetan.bookstore.sb.book;
 
+import com.github.cvetan.bookstore.exceptions.book.BookIsbnUsedException;
 import com.github.cvetan.bookstore.model.Book;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
 import java.util.List;
@@ -19,7 +20,7 @@ public class BookSB extends BookstoreSB implements BookSBLocal {
     }
 
     @Override
-    public void save(Book book) {
+    public void save(Book book) throws BookIsbnUsedException {
         entityManager.persist(book);
         
         clearCache();

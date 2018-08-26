@@ -42,6 +42,54 @@
                                 </p:selectOneRadio>
                             </div>
                         </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="main-price"
+                                value="#{label.mainPrice}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:inputText
+                                    id="main-price"
+                                    value="#{bookFormMB.book.mainPrice}"
+                                    styleClass="form-control"
+                                    required="true">
+                                    <f:converter converterId="javax.faces.BigDecimal"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel
+                                for="promotion-price"
+                                value="#{label.promotionPrice}"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:inputText
+                                    id="promotion-price"
+                                    value="#{bookFormMB.book.promotionPrice}"
+                                    styleClass="form-control"
+                                    required="#{bookFormMB.book.sale}">
+                                    <f:converter converterId="javax.faces.BigDecimal"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <p:outputLabel 
+                                value="#{label.sale}"
+                                for="sale"
+                                styleClass="control-label col-md-2"/>
+                            
+                            <div class="col-md-10">
+                                <p:inputSwitch
+                                    id="sale"
+                                    value="#{bookFormMB.book.sale}"
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
 
                         <div class="form-group ui-flat">
                             <p:outputLabel 
@@ -54,7 +102,8 @@
                                     id="isbn" 
                                     value="#{bookFormMB.book.isbn}" 
                                     styleClass="form-control" 
-                                    required="true"/>
+                                    required="true" 
+                                    size="13"/>
                             </div>
                         </div>
 
@@ -76,7 +125,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="slug" 
-                                value="#{label.bookSlug}" 
+                                value="#{label.slug}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -87,13 +136,13 @@
                                     readonly="#{bookFormMB.editing}"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel
                                 for="author"
-                                value="#{label.bookAuthor}"
+                                value="#{label.author}"
                                 styleClass="control-label col-md-2"/>
-                            
+
                             <div class="col-md-10">
                                 <p:selectOneMenu
                                     id="author"
@@ -109,7 +158,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="categories"
-                                value="#{label.bookCategories}"
+                                value="#{label.categories}"
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -123,13 +172,13 @@
                                 </p:selectCheckboxMenu>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel
                                 for="page-number"
                                 value="#{label.pageNumber}"
                                 styleClass="control-label col-md-2"/>
-                            
+
                             <div class="col-md-4">
                                 <p:inputText 
                                     id="page-number"
@@ -141,7 +190,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="format" 
-                                value="#{label.bookFormat}" 
+                                value="#{label.format}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-4">
@@ -160,7 +209,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="alphabet" 
-                                value="#{label.bookAlphabet}" 
+                                value="#{label.alphabet}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-4">
@@ -204,18 +253,20 @@
                             <div class="col-md-10">
                                 <p:calendar 
                                     id="publish-date"
-                                    showOn="select" 
+                                    mode="popup"
+                                    showOn="button"
                                     value="#{bookFormMB.book.publishDate}" 
-                                    required="true"/>
+                                    required="true" 
+                                    pattern="dd.MM.yyyy."/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <p:outputLabel 
                                 for="image"
-                                value="#{label.bookImage}"
+                                value="#{label.image}"
                                 styleClass="control-label col-md-2"/>
-                            
+
                             <div class="col-md-10">
                                 <p:fileUpload 
                                     id="image"
@@ -223,13 +274,13 @@
                                     mode="simple"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <p:outputLabel 
                                 for="sample"
                                 value="#{label.sample}"
                                 styleClass="control-label col-md-2"/>
-                            
+
                             <div class="col-md-10">
                                 <p:fileUpload 
                                     id="sample"
@@ -241,7 +292,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="description" 
-                                value="#{label.bookDescription}" 
+                                value="#{label.description}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -252,7 +303,7 @@
                                     required="true"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group ui-flat">
                             <p:outputLabel
                                 for="title-tag"
@@ -286,29 +337,67 @@
 
                             <div class="col-md-10">
                                 <div class="pull-right">
-                                    <p:commandButton
-                                        value="#{label.saveBook}"
-                                        ajax="false"
-                                        rendered="#{!bookFormMB.editing}"
-                                        action="#{bookFormMB.save()}"
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                    <div class="hidden-sm hidden-xs">
+                                        <p:commandButton 
+                                            value="#{label.save}" 
+                                            ajax="false"
+                                            rendered="#{!authorFormMB.editing}"
+                                            action="#{authorFormMB.save()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton
-                                        value="#{label.updateBook}"
-                                        ajax="false"
-                                        rendered="#{bookFormMB.editing}"
-                                        action="#{bookFormMB.update()}"
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                        <p:commandButton 
+                                            value="#{label.update}" 
+                                            ajax="false"
+                                            rendered="#{authorFormMB.editing}"
+                                            action="#{authorFormMB.update()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton 
-                                        value="#{label.cancel}" 
-                                        action="#{bookFormMB.close()}" 
-                                        styleClass="btn btn-danger btn-flat" 
-                                        ajax="false"
-                                        icon="fa fa-times"
-                                        immediate="true"/>
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            action="#{authorFormMB.close()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            ajax="false"
+                                            icon="fa fa-times"
+                                            immediate="true"/>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <p:splitButton 
+                                            value="#{label.save}" 
+                                            action="#{bookFormMB.save()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{!bookFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{bookFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+
+                                        <p:splitButton 
+                                            value="#{label.update}" 
+                                            action="#{bookFormMB.update()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{bookFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{bookFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

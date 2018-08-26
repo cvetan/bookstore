@@ -82,7 +82,7 @@ CREATE TABLE `administrators` (
 
 LOCK TABLES `administrators` WRITE;
 /*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
-INSERT INTO `administrators` VALUES (2,1,'Default','Admin','admin','admin@admin.com','$2a$10$8dORIcSCFXxlYgtMovMPWuIUhrXtf93/D0svSo132ZllJY5q0WL3q','2018-08-23 02:09:49',NULL),(3,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$h6lzAqhHyz2E0iE16sqBOOB1CjzBm0ACKqoql6okUkCsMkl69UC1q','2018-08-23 02:10:12',NULL);
+INSERT INTO `administrators` VALUES (2,1,'Default','Admin','admin','admin@admin.com','$2a$10$8dORIcSCFXxlYgtMovMPWuIUhrXtf93/D0svSo132ZllJY5q0WL3q','2018-08-23 02:09:49',NULL),(3,1,'Cvetan','Šimšić','cvetan','cvetan.simsic@gmail.com','$2a$10$RycDd85P53CthNdnr0nXreCU0YBr3OXdK2hPqsXTmH3fNPoXNyOam','2018-08-23 02:10:12','2018-08-26 02:20:06');
 /*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +116,7 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+INSERT INTO `authors` VALUES (1,'Džordž R. R. Martin','dzordz-r-r-martin','<p><strong>Džordž Martin rođen je 1948. u Nju Džersiju kao Džordž Rejmond Ričard Martin.</strong> Sklonost ka pisanju razvio je još kao dete, pišući priče o čudovištima i prodajući ih komšijskoj deci. Kasnije, u srednjoj školi, postao je ljubitelj stripa i predani kolekcionar, usmerivši svoje literarno delovanje na pisanje strip scenarija za različite opskurne fanzine. Prvi profesionalni ugovor sklopio je 1970, prodavši priču za strip <em>Heroj</em>. </p><p><br></p><p> Godine 1971. diplomirao je žurnalistiku na univerzitetu Northwestern. Nekoliko sledećih godina radio je pri administraciji okruga Kuk, organizovao šahovske turnire i bio predavač na katedri za novinarstvo univerziteta Klark u Ajovi. Tokom sedamdesetih samo je povremeno pisao.</p><p><br></p><p> Pošto se 1979. razveo, svu energiju usmerio je ka pisanju. Sve ostalo je legenda: za svoj literarni rad, Džordž R. R. Martin dobio je sve važnije nagrade u žanru epske fantastike, nekoliko Nebula i Hugo nagrada. </p><p><br></p><p> Godine 1986. seli se u Holivud, gde radi kao urednik serijala <em>Zona sumraka</em>, konsultant na scenariju za <em>Lepoticu i zver</em>, producent istog projekta, a na kraju i supervizor. </p><p><br></p><p> Martin danas živi u Santa Feu u Novom Meksiku. Potpredsednik je američkog udruženja SF pisaca.</p>','http://res.cloudinary.com/cvetan/image/upload/v1535245391/Bookstore/Authors/Images/dzordz-r-r-martin-20180826030309.jpg','Bookstore/Authors/Images/dzordz-r-r-martin-20180826030309','Džordž R. R. Martin :: Bookstore',NULL,'2018-08-26 03:03:11',NULL);
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,6 +130,9 @@ DROP TABLE IF EXISTS `books`;
 CREATE TABLE `books` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) unsigned NOT NULL,
+  `main_price` decimal(10,2) unsigned NOT NULL,
+  `promotion_price` decimal(10,2) unsigned DEFAULT NULL,
+  `sale` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `author_id` int(10) unsigned NOT NULL,
   `isbn` varchar(17) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -216,7 +220,7 @@ CREATE TABLE `categories` (
   KEY `parent` (`parent`),
   KEY `name` (`name`),
   CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +229,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (3,NULL,'Akcioni','akcioni','<p class=\"ql-align-justify\">Liter homines, aliter philosophos loqui putas oportere? Tu quidem reddes; Duo Reges: constructio interrete. Ut aliquid scire se gaudeant? Si mala non sunt, iacet omnis ratio Peripateticorum. </p>','Akcioni :: Bookstore prodavnica knjiga',NULL,'2018-08-26 02:54:14',NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,4 +432,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-23  3:25:10
+-- Dump completed on 2018-08-26  4:47:41

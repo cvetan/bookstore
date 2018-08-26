@@ -28,7 +28,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="first-name" 
-                                value="#{label.authorName}" 
+                                value="#{label.name}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -43,7 +43,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="slug" 
-                                value="#{label.authorSlug}" 
+                                value="#{label.slug}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -71,7 +71,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel
                                 for="image"
-                                value="#{label.authorImage}"
+                                value="#{label.image}"
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -86,7 +86,7 @@
                         <div class="form-group ui-flat">
                             <p:outputLabel 
                                 for="description" 
-                                value="#{label.authorDescription}" 
+                                value="#{label.description}" 
                                 styleClass="control-label col-md-2"/>
 
                             <div class="col-md-10">
@@ -131,29 +131,67 @@
 
                             <div class="col-md-10">
                                 <div class="pull-right">
-                                    <p:commandButton
-                                        value="#{label.saveAuthor}"
-                                        ajax="false"
-                                        rendered="#{ ! authorFormMB.editing}"
-                                        action="#{authorFormMB.save()}"
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                    <div class="hidden-sm hidden-xs">
+                                        <p:commandButton 
+                                            value="#{label.save}" 
+                                            ajax="false"
+                                            rendered="#{!authorFormMB.editing}"
+                                            action="#{authorFormMB.save()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton
-                                        value="#{label.updateAuthor}"
-                                        ajax="false"
-                                        rendered="#{authorFormMB.editing}"
-                                        action="#{authorFormMB.update()}"
-                                        styleClass="btn btn-success btn-flat" 
-                                        icon="fa fa-floppy-o"/>
+                                        <p:commandButton 
+                                            value="#{label.update}" 
+                                            ajax="false"
+                                            rendered="#{authorFormMB.editing}"
+                                            action="#{authorFormMB.update()}" 
+                                            styleClass="btn btn-success btn-flat" 
+                                            icon="fa fa-floppy-o"/>
 
-                                    <p:commandButton 
-                                        value="#{label.cancel}" 
-                                        action="#{authorFormMB.close()}" 
-                                        styleClass="btn btn-danger btn-flat" 
-                                        ajax="false"
-                                        icon="fa fa-times"
-                                        immediate="true"/>
+                                        <p:commandButton 
+                                            value="#{label.cancel}" 
+                                            action="#{authorFormMB.close()}" 
+                                            styleClass="btn btn-danger btn-flat" 
+                                            ajax="false"
+                                            icon="fa fa-times"
+                                            immediate="true"/>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <p:splitButton 
+                                            value="#{label.save}" 
+                                            action="#{authorFormMB.save()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{!authorFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{authorFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+
+                                        <p:splitButton 
+                                            value="#{label.update}" 
+                                            action="#{authorFormMB.update()}"
+                                            ajax="false"
+                                            icon="fa fa-floppy-o"
+                                            styleClass="hidden-md hidden-lg btn-success btn-flat"
+                                            rendered="#{authorFormMB.editing}">
+                                            <p:menuitem 
+                                                value="#{label.cancel}" 
+                                                action="#{authorFormMB.close()}" 
+                                                styleClass="btn btn-danger btn-flat"
+                                                icon="fa fa-times"
+                                                ajax="false" 
+                                                immediate="true">
+                                            </p:menuitem>
+                                        </p:splitButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

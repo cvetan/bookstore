@@ -1,6 +1,7 @@
 package com.github.cvetan.bookstore.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b ORDER BY b.id DESC")
     , @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id")
-    , @NamedQuery(name = "Book.findBySlug", query = "SELECT b FROM Book b WHERE b.slug = :slug")})
+    , @NamedQuery(name = "Book.findBySlug", query = "SELECT b FROM Book b WHERE b.slug = :slug")
+    , @NamedQuery(name = "Book.getIsbnList", query = "SELECT b.isbn FROM Book b")
+    , @NamedQuery(name = "Book.getIsbnListUpdate", query = "SELECT b.isbn FROM Book b WHERE b.id != :id")
+    , @NamedQuery(name = "Book.slugList", query = "SELECT b.slug FROM Book b")})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +58,18 @@ public class Book implements Serializable {
     @NotNull
     @Column(name = "active")
     private boolean active;
+    
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "main_price")
+    private BigDecimal mainPrice;
+    @Column(name = "promotion_price")
+    private BigDecimal promotionPrice;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "sale")
+    private boolean sale;
     
     @Basic(optional = false)
     @NotNull
@@ -204,6 +220,30 @@ public class Book implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+    
+    public BigDecimal getMainPrice() {
+        return mainPrice;
+    }
+
+    public void setMainPrice(BigDecimal mainPrice) {
+        this.mainPrice = mainPrice;
+    }
+
+    public BigDecimal getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(BigDecimal promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public boolean getSale() {
+        return sale;
+    }
+
+    public void setSale(boolean sale) {
+        this.sale = sale;
     }
 
     public String getIsbn() {
