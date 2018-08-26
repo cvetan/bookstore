@@ -163,7 +163,8 @@
                                 <p:selectCheckboxMenu 
                                     id="categories"
                                     label="#{label.selectCategories}"
-                                    converter="categoryConv">
+                                    converter="categoryConv"
+                                    value="#{bookFormMB.book.categoryList}">
                                     <f:selectItems value="#{bookFormMB.categoryList}" var="category" itemValue="#{category}" itemLabel="#{category.name}"/>
                                 </p:selectCheckboxMenu>
                             </div>
