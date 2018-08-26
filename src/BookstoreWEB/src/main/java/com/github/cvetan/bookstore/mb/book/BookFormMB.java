@@ -8,12 +8,18 @@ import com.github.cvetan.bookstore.model.Category;
 import com.github.cvetan.bookstore.sb.author.AuthorSBLocal;
 import com.github.cvetan.bookstore.sb.book.BookSBLocal;
 import com.github.cvetan.bookstore.sb.category.CategorySBLocal;
+import com.github.cvetan.bookstore.util.CloudinaryFacade;
+import com.github.cvetan.bookstore.util.FileUploadUtil;
+import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.UploadedFile;
@@ -178,8 +184,23 @@ public class BookFormMB implements Serializable {
     }
     
     public String save() {
-        
-        return "/admin/book-list?faces-redirect=true";
+        try {
+            if (FileUploadUtil.uploaded(image)) {
+                String filename = book.getTitle();
+                File file = FileUploadUtil.generateTempFile(image.getInputstream(), filename);
+                
+                Map result = CloudinaryFacade.getInstance().uploadBookImage(file);
+                
+                book.setImage((String) result.get("url"));
+                book.setImagePublicId((String) result.get("public_id"));
+            }
+            
+            bookSB.save(book);
+            
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/admin/book-list?faces-redirect=true");
+        } catch (Exception ex) {
+            return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/book-form?faces-redirect=true");
+        }
     }
     
     public String update() {

@@ -96,7 +96,13 @@
                         <p:column 
                             selectionMode="single"
                             styleClass="align-center"/>
-
+                        
+                        <p:column
+                            headerText="#{label.image}"
+                            styleClass="align-center">
+                            <h:graphicImage value="#{book.image}" styleClass="table-image"/>
+                        </p:column>
+                        
                         <p:column 
                             width="5%"
                             headerText="ID" 
@@ -105,6 +111,61 @@
                             filterMatchMode="contains"
                             styleClass="align-center">
                             <h:outputText value="#{book.id}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.title}"
+                            filterBy="#{book.title}"
+                            filterMatchMode="contains"
+                            sortBy="#{book.title}"
+                            styleClass="align-center">
+                            <h:outputText value="#{book.title}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.slug}"
+                            filterBy="#{book.slug}"
+                            filterMatchMode="contains"
+                            sortBy="#{book.slug}"
+                            styleClass="align-center">
+                            <h:outputText value="#{book.slug}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.author}"
+                            filterBy="#{book.author}"
+                            filterMatchMode="contains"
+                            sortBy="#{book.author}"
+                            styleClass="align-center">
+                            <h:outputText value="#{book.author}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.mainPrice}"
+                            styleClass="align-center">
+                            <h:outputText value="#{book.mainPrice}"/>
+                        </p:column>
+                        
+                        <p:column
+                            headerText="#{label.timesBought}"
+                            styleClass="align-center">
+                            <h:outputText value="#{book.orderItemList.size()}"/>
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="#{label.status}" 
+                            styleClass="align-center">
+                            <ui:fragment rendered="#{book.active}">
+                                <span class="label label-success">
+                                    Active
+                                </span>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{!book.active}">
+                                <span class="label label-danger">
+                                    Inactive
+                                </span>
+                            </ui:fragment>
                         </p:column>
                     </p:dataTable>
                 </div>

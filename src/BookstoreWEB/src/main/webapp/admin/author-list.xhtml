@@ -4,14 +4,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:adm="http://github.com/adminfaces"
                 template="#{adminConfig.templatePath}">
-    
-    <ui:define name="head-end">
-        <style type="text/css">
-            .author-table-image {
-                max-width: 100px;
-            }
-        </style>
-    </ui:define>
 
     <ui:define name="title">#{title.authorList}</ui:define>
 
@@ -107,7 +99,7 @@
                         
                         <p:column
                             headerText="#{label.image}" styleClass="align-center">
-                            <h:graphicImage value="#{author.image}" styleClass="author-table-image"/>
+                            <h:graphicImage value="#{author.image}" styleClass="table-image"/>
                         </p:column>
 
                         <p:column 

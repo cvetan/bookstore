@@ -87,7 +87,7 @@
                                 <p:inputSwitch
                                     id="sale"
                                     value="#{bookFormMB.book.sale}"
-                                    styleClass="form-control"/>
+                                    styleClass="form-control" />
                             </div>
                         </div>
 
@@ -147,8 +147,6 @@
                                 <p:selectOneMenu
                                     id="author"
                                     value="#{bookFormMB.book.author}"
-                                    filter="true"
-                                    filterMatchMode="contains"
                                     converter="authorConv">
                                     <f:selectItems value="#{bookFormMB.authorList}" var="author" itemValue="#{author}" itemLabel="#{author.name}"/>
                                 </p:selectOneMenu>
@@ -164,8 +162,6 @@
                             <div class="col-md-10">
                                 <p:selectCheckboxMenu 
                                     id="categories"
-                                    filter="true"
-                                    filterMatchMode="contains"
                                     label="#{label.selectCategories}"
                                     converter="categoryConv">
                                     <f:selectItems value="#{bookFormMB.categoryList}" var="category" itemValue="#{category}" itemLabel="#{category.name}"/>
@@ -183,7 +179,8 @@
                                 <p:inputText 
                                     id="page-number"
                                     value="#{bookFormMB.book.pageNumber}"
-                                    styleClass="form-control"/>
+                                    styleClass="form-control" 
+                                    required="true"/>
                             </div>
                         </div>
 
@@ -341,22 +338,22 @@
                                         <p:commandButton 
                                             value="#{label.save}" 
                                             ajax="false"
-                                            rendered="#{!authorFormMB.editing}"
-                                            action="#{authorFormMB.save()}" 
+                                            rendered="#{!bookFormMB.editing}"
+                                            action="#{bookFormMB.save()}" 
                                             styleClass="btn btn-success btn-flat" 
                                             icon="fa fa-floppy-o"/>
 
                                         <p:commandButton 
                                             value="#{label.update}" 
                                             ajax="false"
-                                            rendered="#{authorFormMB.editing}"
-                                            action="#{authorFormMB.update()}" 
+                                            rendered="#{bookFormMB.editing}"
+                                            action="#{bookFormMB.update()}" 
                                             styleClass="btn btn-success btn-flat" 
                                             icon="fa fa-floppy-o"/>
 
                                         <p:commandButton 
                                             value="#{label.cancel}" 
-                                            action="#{authorFormMB.close()}" 
+                                            action="#{bookFormMB.close()}" 
                                             styleClass="btn btn-danger btn-flat" 
                                             ajax="false"
                                             icon="fa fa-times"
@@ -406,7 +403,7 @@
                     <p:messages 
                         globalOnly="false" 
                         showDetail="true" 
-                        showSummary="false" 
+                        showSummary="true" 
                         showIcon="true" />
                 </p:panel>
             </div>

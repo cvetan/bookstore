@@ -124,7 +124,8 @@ public class AuthorFormMB implements Serializable {
         try {
 
             if (FileUploadUtil.uploaded(image)) {
-                File file = getUploadedFile();
+                String filename = FileUploadUtil.generateFilename(author.getName());
+                File file = FileUploadUtil.generateTempFile(image.getInputstream(), filename);
                 
                 Map result = CloudinaryFacade.getInstance().uploadAuthorImage(file);
                 
@@ -143,7 +144,8 @@ public class AuthorFormMB implements Serializable {
     public String update() {
         try {
             if (FileUploadUtil.uploaded(image)) {
-                File file = getUploadedFile();
+                String filename = FileUploadUtil.generateFilename(author.getName());
+                File file = FileUploadUtil.generateTempFile(image.getInputstream(), filename);
                 
                 Map result = CloudinaryFacade.getInstance().uploadAuthorImage(file);
                 
@@ -157,16 +159,6 @@ public class AuthorFormMB implements Serializable {
         } catch (Exception ex) {
             return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/admin/author-form?faces-redirect=true&id=" + author.getId());
         }
-    }
-
-    private File getUploadedFile() throws IOException {
-        String name = author.getName();
-        String filename = FileUploadUtil.generateFilename(name);
-        InputStream stream = image.getInputstream();
-        
-        File uploadedFile = FilesFacade.createTempFile(stream, filename);
-        
-        return uploadedFile;
     }
 
     public String close() {

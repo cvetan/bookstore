@@ -59,13 +59,14 @@ public class Book implements Serializable {
     @Column(name = "active")
     private boolean active;
     
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "main_price")
     private BigDecimal mainPrice;
+    
     @Column(name = "promotion_price")
     private BigDecimal promotionPrice;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale")
@@ -83,14 +84,10 @@ public class Book implements Serializable {
     @Column(name = "title")
     private String title;
     
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "slug")
     private String slug;
     
-    @Basic(optional = false)
-    @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "description")
@@ -105,7 +102,7 @@ public class Book implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "page_number")
-    private int pageNumber;
+    private Integer pageNumber;
     
     @Basic(optional = false)
     @NotNull
@@ -286,11 +283,11 @@ public class Book implements Serializable {
         this.format = format;
     }
 
-    public int getPageNumber() {
+    public Integer getPageNumber() {
         return pageNumber;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
     }
 

@@ -45,8 +45,15 @@ public class CloudinaryFacade {
         return result;
     }
     
-    public static String resizeAuthorImage(String image) {
+    public Map uploadBookImage(File file) throws IOException {
+        Map<Object, Object> parameters = new HashMap<>();
         
-        return null;
+        String filename = FilenameUtils.getBaseName(file.getName());
+        
+        parameters.put("public_id", "Bookstore/Books/Images/" + filename);
+
+        Map result = cloudinary.uploader().upload(file, parameters);
+
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package com.github.cvetan.bookstore.sb.book;
 import com.github.cvetan.bookstore.exceptions.book.BookIsbnUsedException;
 import com.github.cvetan.bookstore.model.Book;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
+import com.github.cvetan.bookstore.util.SlugGenerator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -21,6 +22,19 @@ public class BookSB extends BookstoreSB implements BookSBLocal {
 
     @Override
     public void save(Book book) throws BookIsbnUsedException {
+        List<String> isbnList = entityManager.createNamedQuery("Book.getIsbnList").getResultList();
+        List<String> slugList = entityManager.createNamedQuery("Book.slugList").getResultList();
+        
+        if (isbnList.contains(book.getIsbn())) {
+            throw new BookIsbnUsedException("isbnUsedError");
+        }
+        
+        if (book.getSlug() == null) {
+            book.setSlug(SlugGenerator.generateSlugRaw(book.getTitle(), slugList));
+        } else {
+            book.setSlug(SlugGenerator.generateSlug(book.getSlug(), slugList));
+        }
+        
         entityManager.persist(book);
         
         clearCache();

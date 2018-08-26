@@ -58,8 +58,6 @@ public class Category implements Serializable {
     @Column(name = "slug")
     private String slug;
     
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "description")
     private String description;
