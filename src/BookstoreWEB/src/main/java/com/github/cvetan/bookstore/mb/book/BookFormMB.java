@@ -186,7 +186,7 @@ public class BookFormMB implements Serializable {
     public String save() {
         try {
             if (FileUploadUtil.uploaded(image)) {
-                String filename = book.getTitle();
+                String filename = FileUploadUtil.generateFilename(book.getTitle());
                 File file = FileUploadUtil.generateTempFile(image.getInputstream(), filename);
                 
                 Map result = CloudinaryFacade.getInstance().uploadBookImage(file);
