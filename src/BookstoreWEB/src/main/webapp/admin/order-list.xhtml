@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{adminConfig.templatePath}">
+
+    <ui:define name="title">#{title.authorList}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <p:messages 
+            globalOnly="false" 
+            showDetail="true" 
+            showSummary="false" 
+            showIcon="true" />
+
+        <h:panelGroup 
+            layout="block" 
+            styleClass="alert alert-info">
+            There are no pending orders at the moment.
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
