@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/user-template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{userRegisterMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <p:panel styleClass="box box-primary">
+                    <h:form styleClass="form-horizontal">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="first-name" 
+                                value="#{label.firstName}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="first-name" 
+                                    value="#{userRegisterMB.user.firstName}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="last-name" 
+                                value="#{label.lastName}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="last-name" 
+                                    value="#{userRegisterMB.user.lastName}" 
+                                    styleClass="form-control" 
+                                    required="true"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="username" 
+                                value="#{label.username}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="username" 
+                                    value="#{userRegisterMB.user.username}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="email" 
+                                value="#{label.email}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="email" 
+                                    value="#{userRegisterMB.user.email}" 
+                                    styleClass="form-control" 
+                                    required="true">
+                                    <!--<f:validator validatorId="emailVal"/>-->
+                                </p:inputText>
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="password" 
+                                value="#{label.password}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:password 
+                                    id="password" 
+                                    value="#{userRegisterMB.user.password}" 
+                                    styleClass="form-control" 
+                                    required="true"
+                                    match="repeat-password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="repeat-password" 
+                                value="#{label.repeatPassword}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:password 
+                                    id="repeat-password" 
+                                    styleClass="form-control" 
+                                    value="#{userRegisterMB.user.password}"
+                                    required="true" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="birth-date"
+                                value="#{label.birthDate}"
+                                styleClass="control-label col-md-4"/>
+                            
+                            <div class="col-md-8">
+                                <p:calendar 
+                                    id="birth-date"
+                                    mode="popup"
+                                    showOn="button"
+                                    value="#{userRegisterMB.user.birthDate}"  
+                                    pattern="dd.MM.yyyy."/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <p:outputLabel 
+                                for="gender"
+                                value="#{label.gender}"
+                                styleClass="control-label col-md-4"/>
+                            
+                            <div class="col-md-8">
+                                <p:selectOneRadio 
+                                    id="gender" 
+                                    value="#{userRegisterMB.user.gender}" 
+                                    layout="responsive" 
+                                    columns="2" 
+                                    required="true">
+                                    <f:selectItem itemLabel="#{label.male}" itemValue="male"/>
+                                    <f:selectItem itemLabel="#{label.female}" itemValue="female"/>
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <p:outputLabel 
+                                value="#{label.phone}"
+                                for="phone"
+                                styleClass="control-label col-md-4"/>
+                            
+                            <div class="col-md-8">
+                                <p:inputText
+                                    id="phone"
+                                    styleClass="form-control"
+                                    value="#{userRegisterMB.user.phone}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <div class="pull-right">
+                                    <p:commandButton 
+                                        value="#{label.register}" 
+                                        ajax="false"
+                                        action="#{userRegisterMB.register()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-user-plus"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

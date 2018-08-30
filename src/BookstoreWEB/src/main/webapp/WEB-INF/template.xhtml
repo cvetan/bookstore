@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title><ui:insert name="title"></ui:insert> :: Bookstore</title>
+        <meta name="description" content="Bookstore"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Bootstrap -->
+        <h:outputStylesheet name="universal/vendor/bootstrap/css/bootstrap.min.css"/>
+        <!-- Font Awesome CSS -->
+        <h:outputStylesheet library="universal/vendor/font-awesome" name="font-awesome.css"/>
+        <!-- Google fonts Roboto -->
+        <h:outputStylesheet name="https://fonts.googleapis.com/css?family=Roboto:300,400,700"/>
+        <!-- Bootstrap select -->
+        <h:outputStylesheet library="universal/vendor/bootstrap-select/css" name="bootstrap-select.min.css"/>
+        <!-- owl carousel-->
+        <h:outputStylesheet library="universal/vendor/owl.carousel/assets" name="owl.carousel.css"/>
+        <h:outputStylesheet library="universal/vendor/owl.carousel/assets" name="owl.theme.default.css"/>
+        <!-- theme stylesheet -->
+        <h:outputStylesheet library="universal/css" name="style.blue.css"/>
+        <!-- custom stylesheet -->
+        <h:outputStylesheet library="universal/css" name="custom.css"/>
+    </h:head>
+
+    <h:body>
+        <ui:insert name="content">This is template content.</ui:insert>
+
+        <!-- javascript files -->
+        <h:outputScript library="universal/vendor/jquery" name="jquery.min.css"/>
+        <h:outputScript library="universal/vendor/popper.js/umd" name="popper.min.js"/>
+        <h:outputScript library="universal/vendor/bootstrap/js" name="bootstrap.min.js"/>
+        <h:outputScript library="universal/vendor/jquery.cookie" name="jquery.cookie.js"/>
+        <h:outputScript library="universal/vendor/waypoints/lib" name="jquery.waypoints.min.js"/>
+        <h:outputScript library="universal/vendor/jquery.counterup" name="jquery.counterup.min.js"/>
+        <h:outputScript library="universal/vendor/owl.carousel" name="owl.carousel.min.js"/>
+        <h:outputScript library="universal/vendor/owl.carousel2.thumbs" name="owl.carousel2.thumbs.min.js"/>
+        <h:outputScript library="universal/js" name="jquery.parallax-1.1.3.js"/>
+        <h:outputScript library="universal/vendor/bootstrap-select/js" name="bootstrap-select.min.js"/>
+        <h:outputScript library="universal/vendor/jquery.scrollto" name="jquery.scrollTo.min.js"/>
+        <h:outputScript library="universal/js" name="front.js"/>
+    </h:body>
+</html>
+
