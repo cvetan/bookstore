@@ -10,11 +10,18 @@
                 <span>#{label.homepage}</span>
             </p:link>
         </li>
-        
+
         <li class="header">
             #{label.categories}
         </li>
-        
-        
+
+        <ui:repeat value="#{userLayoutMB.categories}" var="category">
+            <li>
+                <p:link href="/book-list?faces-redirect=true&amp;type=cateogory&amp;id=#{category.id}" target="_blank">
+                    
+                    <span>#{category.name}</span>
+                </p:link>
+            </li>
+        </ui:repeat>
     </ul>
 </ui:composition>
