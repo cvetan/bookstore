@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cvetan
  */
-@WebFilter("/registration.xhtml")
-public class UserRegisterFilter implements Filter {
+@WebFilter(urlPatterns = {"/registration.xhtml", "/user-login.xhtml"})
+public class UserSessionFilter implements Filter {
     
     @Inject
     UserSessionMB userSessionMB;
