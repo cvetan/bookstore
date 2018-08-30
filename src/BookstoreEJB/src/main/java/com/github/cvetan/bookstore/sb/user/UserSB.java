@@ -2,7 +2,9 @@ package com.github.cvetan.bookstore.sb.user;
 
 import com.github.cvetan.bookstore.model.User;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -20,9 +22,23 @@ public class UserSB extends BookstoreSB implements UserSBLocal {
     }
 
     @Override
-    public User login(String username, String password) {
+    public User login(String username, String password) throws Exception {
+        Query query = entityManager.createNamedQuery("User.getLogin");
+        query.setParameter("username", username);
         
-        return new User();
+        List<User> userList = query.getResultList();
+        
+        if (userList.isEmpty()) {
+            throw new Exception("Username not found!");
+        }
+        
+        User user = userList.get(0);
+        
+        if (!BCrypt.checkpw(password, user.getPassword())) {
+            throw new Exception("Incorrect password!");
+        }
+        
+        return user;
     }
 
     

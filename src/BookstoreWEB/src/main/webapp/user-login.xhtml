@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/user-template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{userRegisterMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <p:panel styleClass="box">
+                    <h:form styleClass="">
+                        <p class="login-box-msg">#{label.signInMessage}</p>
+
+                        <p:messages 
+                            globalOnly="false" 
+                            showDetail="true" 
+                            showSummary="false" 
+                            showIcon="true" />
+
+                        <div class="form-group has-feedback ui-flat">
+                            <p:inputText
+                                type="text"
+                                value="#{userSessionMB.username}"
+                                styleClass="form-control" 
+                                placeholder="#{label.usernameOrEmail}"
+                                required="true" 
+                                requiredMessage="#{message.usernameOrEmailRequired}"/>
+                            <i class="fa fa-envelope form-control-feedback" ></i>
+                        </div>
+
+                        <div class="form-group has-feedback ui-flat">
+                            <p:inputText
+                                type="password" 
+                                value="#{userSessionMB.password}"
+                                styleClass="form-control"
+                                placeholder="#{label.passwordLogin}" 
+                                required="true" 
+                                requiredMessage="#{message.passwordRequired}"/>
+                            <i class="fa fa-lock form-control-feedback"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p:commandButton 
+                                    ajax="false"
+                                    styleClass="btn btn-primary btn-block btn-flat" 
+                                    action="#{userSessionMB.login()}" 
+                                    value="#{label.login}" 
+                                    icon="fa fa-lock"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
