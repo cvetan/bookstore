@@ -3,10 +3,10 @@ package com.github.cvetan.bookstore.sb.admin;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorEmailUsedException;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorOrderFKException;
 import com.github.cvetan.bookstore.exceptions.administrator.AdministratorUsernameUsedException;
-import com.github.cvetan.bookstore.model.Administrator;
-import com.github.cvetan.bookstore.sb.BookstoreSB;
 import com.github.cvetan.bookstore.exceptions.session.admin.IncorrectPasswordException;
 import com.github.cvetan.bookstore.exceptions.session.admin.NoAccountException;
+import com.github.cvetan.bookstore.model.Administrator;
+import com.github.cvetan.bookstore.sb.BookstoreSB;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -73,7 +73,13 @@ public class AdministratorSB extends BookstoreSB implements AdministratorSBLocal
             throw new AdministratorEmailUsedException("administratorEmailUsedError");
         }
         
-        administrator.setPassword(BCrypt.hashpw(administrator.getPassword(), BCrypt.gensalt()));
+        if (administrator.getPassword() == null) {
+            Administrator oldAdministrator = entityManager.find(Administrator.class, administrator.getId());
+            
+            administrator.setPassword(oldAdministrator.getPassword());
+        } else {
+            administrator.setPassword(BCrypt.hashpw(administrator.getPassword(), BCrypt.gensalt()));
+        }
 
         entityManager.merge(administrator);
 

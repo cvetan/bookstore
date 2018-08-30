@@ -28,7 +28,7 @@
          <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-theme</artifactId>
-            <version>1.0.0-RC19-SNAPSHOT</version>
+            <version>1.0.0-RC18</version>
         </dependency>
         <dependency>
             <groupId>com.cloudinary</groupId>
