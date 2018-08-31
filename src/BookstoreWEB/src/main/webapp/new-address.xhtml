@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/user-template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{title.newAddress}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-6">
+                <p:panel styleClass="box box-primary">
+                    <h:form styleClass="form-horizontal">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="city" 
+                                value="#{label.city}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:selectOneMenu
+                                    id="city"
+                                    value="#{newAddressMB.address.city}"
+                                    converter="cityConv">
+                                    <f:selectItems value="#{newAddressMB.cities}" var="city" itemValue="#{city}" itemLabel="#{city.name}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="street" 
+                                value="#{label.street}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="street" 
+                                    value="#{newAddressMB.address.street}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="street-number" 
+                                value="#{label.streetNumber}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="street-number" 
+                                    value="#{newAddressMB.address.streetNumber}" 
+                                    styleClass="form-control" 
+                                    required="true" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="contact-phone" 
+                                value="#{label.contactPhone}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputText 
+                                    id="contact-phone" 
+                                    value="#{newAddressMB.address.contactPhone}" 
+                                    styleClass="form-control" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="details" 
+                                value="#{label.details}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:inputTextarea 
+                                    id="details"
+                                    value="#{newAddressMB.address.details}"
+                                    styleClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <div class="pull-right">
+                                    <p:commandButton 
+                                        value="#{label.save}" 
+                                        ajax="false"
+                                        action="#{newAddressMB.save()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -5,7 +5,7 @@
 
     <ul class="sidebar-menu">
         <li>
-            <p:link href="/index.xhtml" target="_blank">
+            <p:link href="/index.xhtml">
                 <i class="fa fa-home"></i>
                 <span>#{label.homepage}</span>
             </p:link>
@@ -17,7 +17,7 @@
 
         <ui:repeat value="#{userLayoutMB.categories}" var="category">
             <li>
-                <p:link href="/book-list?faces-redirect=true&amp;type=cateogory&amp;id=#{category.id}" target="_blank">
+                <p:link href="category.xhtml?id=#{category.id}">
                     
                     <span>#{category.name}</span>
                 </p:link>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="/WEB-INF/templates/user-template.xhtml">
+
+    <ui:define name="title">#{categoryFrontMB.title}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{categoryFrontMB.id}" converter="javax.faces.Long"/>
+
+            <f:event type="preRenderView" listener="#{categoryFrontMB.initPage()}"/>
+        </f:metadata>
+
+        <h:panelGroup 
+            layout="block" 
+            styleClass="alert alert-info" 
+            rendered="#{categoryFrontMB.bookList.isEmpty()}">
+            #{message.noBooks}
+        </h:panelGroup>
+
+        <p:panel styleClass="card no-border" rendered="#{!categoryFrontMB.bookList.isEmpty()}">
+            <p:dataGrid 
+                var="book" 
+                value="#{categoryFrontMB.bookList}" 
+                columns="4" 
+                layout="grid" 
+                rows="12"
+                paginator="true" 
+                paginatorAlwaysVisible="false"
+                paginatorPosition="bottom" styleClass="no-border">
+                <p:panel styleClass="no-border align-center">
+                    <h:panelGrid columns="1" style="width:100%" styleClass="no-border">
+                        <p:graphicImage value="#{book.image}" styleClass="img img-responsive"/>
+
+                        <p:link
+                            href="/book.xhtml?faces-redirect=true&amp;id=#{book.id}">
+                            <span class="lead">#{book.title}</span>
+                        </p:link>
+                        
+                        <p:link href="#">
+                            <span class="small">#{book.author}</span>
+                        </p:link>
+                        
+                        <span>#{book.mainPrice} RSD</span>
+                        <s>#{book.mainPrice} RSD</s>
+
+                        <p:commandButton 
+                            styleClass="btn btn-flat btn-primary btn-block"
+                            value="Add to cart" 
+                            icon="fa fa-cart-plus"/>
+                    </h:panelGrid>
+                </p:panel>
+
+            </p:dataGrid>
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
