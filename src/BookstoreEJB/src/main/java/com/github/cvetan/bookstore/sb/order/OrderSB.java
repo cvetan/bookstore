@@ -2,7 +2,6 @@ package com.github.cvetan.bookstore.sb.order;
 
 import com.github.cvetan.bookstore.model.OrderE;
 import com.github.cvetan.bookstore.sb.BookstoreSB;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -15,8 +14,7 @@ public class OrderSB extends BookstoreSB implements OrderSBLocal {
     
     @Override
     public List<OrderE> getUnprocessedList() {
-        
-        return new ArrayList<>();
+        return entityManager.createNamedQuery("OrderE.findAll").getResultList();
     }
 
     @Override

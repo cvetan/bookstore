@@ -207,7 +207,7 @@ public class OrderE implements Serializable {
 
     @Override
     public String toString() {
-        return id + " - " + user.getName();
+        return id + " - ";
     }
     
     @PrePersist
