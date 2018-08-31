@@ -196,7 +196,8 @@ public class ShoppingCartMB implements Serializable {
             
             items.clear();
             
-            return Redirector.redirectWithMessage("Kupovina uspesna.", FacesMessage.SEVERITY_INFO, "/index?faces-redirec=true");
+            String message = ResourceBundleLoader.loadFromClass("messages", "orderSuccessfull");
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/index?faces-redirec=true");
         } catch (Exception ex) {
             return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/cart?faces-redirect=true");
         }
