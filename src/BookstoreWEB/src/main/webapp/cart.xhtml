@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/user-template.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"> 
 
     <ui:define name="title">#{title.shoppingCart}</ui:define>
 
@@ -12,8 +13,72 @@
 
     <ui:define name="body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
+                <p:messages 
+                    globalOnly="false" 
+                    showDetail="true" 
+                    showSummary="false" 
+                    showIcon="true" />
                 
+                <div class="box box-primary" jsf:rendered="#{!shoppingCartMB.items.isEmpty()}">
+                    <h:form>
+                        <p:dataTable 
+                            var="item" 
+                            value="#{shoppingCartMB.items}" 
+                            tableStyle="table-layout: auto"
+                            widgetVar="itemsTable">
+                            <p:column
+                                headerText="#{label.image}"
+                                styleClass="align-center">
+                                <h:graphicImage value="#{item.book.image}" styleClass="table-image"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="#{label.title}"
+                                styleClass="align-center">
+                                <h:outputText value="#{item.book.title}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="#{label.price}"
+                                styleClass="align-center">
+                                <h:outputText value="#{item.price} RSD"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="#{label.amount}"
+                                styleClass="align-center">
+                                <h:outputText value="#{item.amount}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="#{label.itemTotal}"
+                                styleClass="align-center">
+                                <h:outputText value="#{item.totalItem} RSD"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="#{label.actions}"
+                                styleClass="align-center">
+                                <p:commandButton
+                                    value="#{label.remove}"
+                                    action="#{shoppingCartMB.removeFromCart(item)}"
+                                    icon="fa fa-trash"
+                                    styleClass="btn btn-flat btn-danger"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        Total items: #{shoppingCartMB.items.size()}, Total price: #{shoppingCartMB.total}
+                    </h:form>
+                </div>
+
+                <h:panelGroup 
+                    layout="block" 
+                    styleClass="alert alert-info" 
+                    rendered="#{shoppingCartMB.items.isEmpty()}">
+                    Cart empty
+                    <h:outputText value=" " escape="false"/>
+                </h:panelGroup>
             </div>
         </div>
     </ui:define>

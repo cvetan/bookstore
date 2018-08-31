@@ -23,40 +23,46 @@
             #{message.noBooks}
         </h:panelGroup>
 
+        <h:form>
+            <p:growl autoUpdate="true" showDetail="true" showSummary="false" life="3000"/>
+        </h:form>
+
         <p:panel styleClass="card no-border" rendered="#{!categoryFrontMB.bookList.isEmpty()}">
-            <p:dataGrid 
-                var="book" 
-                value="#{categoryFrontMB.bookList}" 
-                columns="4" 
-                layout="grid" 
-                rows="12"
-                paginator="true" 
-                paginatorAlwaysVisible="false"
-                paginatorPosition="bottom" styleClass="no-border">
-                <p:panel styleClass="no-border align-center">
-                    <h:panelGrid columns="1" style="width:100%" styleClass="no-border">
-                        <p:graphicImage value="#{book.image}" styleClass="img img-responsive"/>
+            <h:form>
+                <p:dataGrid 
+                    var="book" 
+                    value="#{categoryFrontMB.bookList}" 
+                    columns="4" 
+                    layout="grid" 
+                    rows="12"
+                    paginator="true" 
+                    paginatorAlwaysVisible="false"
+                    paginatorPosition="bottom" styleClass="no-border">
+                    <p:panel styleClass="no-border align-center">
+                        <h:panelGrid columns="1" style="width:100%" styleClass="no-border">
+                            <p:graphicImage value="#{book.image}" styleClass="img img-responsive"/>
 
-                        <p:link
-                            href="/book.xhtml?faces-redirect=true&amp;id=#{book.id}">
-                            <span class="lead">#{book.title}</span>
-                        </p:link>
-                        
-                        <p:link href="#">
-                            <span class="small">#{book.author}</span>
-                        </p:link>
-                        
-                        <span>#{book.mainPrice} RSD</span>
-                        <s>#{book.mainPrice} RSD</s>
+                            <p:link
+                                href="/book.xhtml?faces-redirect=true&amp;id=#{book.id}">
+                                <span class="lead">#{book.title}</span>
+                            </p:link>
 
-                        <p:commandButton 
-                            styleClass="btn btn-flat btn-primary btn-block"
-                            value="Add to cart" 
-                            icon="fa fa-cart-plus"/>
-                    </h:panelGrid>
-                </p:panel>
+                            <p:link href="#">
+                                <span class="small">#{book.author}</span>
+                            </p:link>
 
-            </p:dataGrid>
+                            <span>#{book.mainPrice} RSD</span>
+                            <s>#{book.mainPrice} RSD</s>
+
+                            <p:commandButton 
+                                styleClass="btn btn-flat btn-primary btn-block"
+                                value="Add to cart" 
+                                icon="fa fa-cart-plus" 
+                                action="#{shoppingCartMB.addToCart(book)}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
+            </h:form>
         </p:panel>
 
     </ui:define>
