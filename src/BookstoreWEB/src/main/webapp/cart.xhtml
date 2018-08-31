@@ -27,6 +27,25 @@
                             value="#{shoppingCartMB.items}" 
                             tableStyle="table-layout: auto"
                             widgetVar="itemsTable">
+                            <f:facet name="footer">
+                                Total items: #{shoppingCartMB.items.size()}, 
+                                Total price: #{shoppingCartMB.total}
+                                
+                                <p:selectOneMenu
+                                    id="address"
+                                    converter="addressConv" 
+                                    value="#{shoppingCartMB.order.address}">
+                                    <f:selectItems value="#{userSessionMB.user.addressList}" var="address" itemValue="#{address}" itemLabel="#{address}"/>
+                                </p:selectOneMenu>
+                                
+                                <p:commandButton 
+                                    value="Place order"
+                                    action="#{shoppingCartMB.placeOrder()}"
+                                    ajax="false"
+                                    styleClass="btn btn-flat btn-success"
+                                    icon="fa fa-cart-arrow-down"/>
+                            </f:facet>
+                            
                             <p:column
                                 headerText="#{label.image}"
                                 styleClass="align-center">
@@ -67,8 +86,6 @@
                                     styleClass="btn btn-flat btn-danger"/>
                             </p:column>
                         </p:dataTable>
-
-                        Total items: #{shoppingCartMB.items.size()}, Total price: #{shoppingCartMB.total}
                     </h:form>
                 </div>
 

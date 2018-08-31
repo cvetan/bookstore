@@ -4,6 +4,7 @@ import com.github.cvetan.bookstore.cart.CartItem;
 import com.github.cvetan.bookstore.model.Book;
 import com.github.cvetan.bookstore.model.OrderE;
 import com.github.cvetan.bookstore.model.OrderItem;
+import com.github.cvetan.bookstore.model.User;
 import com.github.cvetan.bookstore.sb.order.OrderSBLocal;
 import com.github.cvetan.bookstore.util.Redirector;
 import com.github.cvetan.bookstore.util.ResourceBundleLoader;
@@ -14,10 +15,12 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.inject.Inject;
 
 /**
  *
@@ -35,12 +38,20 @@ public class ShoppingCartMB implements Serializable {
     private BigDecimal total;
 
     private OrderE order;
+    
+    @Inject
+    UserSessionMB userSessionMB;
 
     /**
      * Creates a new instance of ShoppingCartMB
      */
     public ShoppingCartMB() {
+    }
+    
+    @PostConstruct
+    public void initData() {
         items = new ArrayList<>();
+        
         order = new OrderE();
     }
 
@@ -147,6 +158,7 @@ public class ShoppingCartMB implements Serializable {
         BigDecimal totalItems = new BigDecimal(sum, MathContext.DECIMAL64);
 
         total = totalItems;
+        order.setOrderTotal(total);
     }
     
     public String removeFromCart(CartItem item) {
@@ -161,9 +173,16 @@ public class ShoppingCartMB implements Serializable {
 
     public String placeOrder() {
         int index = 1;
+        
+        User user = userSessionMB.getUser();
+        
+        order.setUser(user);
+        order.setStatus("created");
 
         for (CartItem ci : items) {
             OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setBook(ci.getBook());
             orderItem.setItemNumber(index);
             orderItem.setAmount(ci.getAmount());
             orderItem.setPrice(ci.getPrice());
@@ -174,6 +193,8 @@ public class ShoppingCartMB implements Serializable {
 
         try {
             orderSB.save(order);
+            
+            items.clear();
             
             return Redirector.redirectWithMessage("Kupovina uspesna.", FacesMessage.SEVERITY_INFO, "/index?faces-redirec=true");
         } catch (Exception ex) {
