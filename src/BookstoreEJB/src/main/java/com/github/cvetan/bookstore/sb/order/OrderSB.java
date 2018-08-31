@@ -14,7 +14,9 @@ public class OrderSB extends BookstoreSB implements OrderSBLocal {
     
     @Override
     public List<OrderE> getUnprocessedList() {
-        return entityManager.createNamedQuery("OrderE.findAll").getResultList();
+        List<OrderE> list = entityManager.createNamedQuery("OrderE.findAll").getResultList();
+       
+        return list;
     }
 
     @Override
