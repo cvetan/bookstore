@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/user-template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <ui:define name="title">#{title.newAddress}</ui:define>
+
+    <ui:define name="description"></ui:define>
+
+    <ui:define name="body">
+        <div class="row">
+            <div class="col-md-6">
+                <p:panel styleClass="box box-primary">
+                    <h:form styleClass="form-horizontal">
+                        <div class="form-group ui-flat">
+                            <p:outputLabel 
+                                for="address" 
+                                value="#{label.address}" 
+                                styleClass="control-label col-md-4"/>
+
+                            <div class="col-md-8">
+                                <p:selectOneMenu
+                                    id="address"
+                                    converter="addressConv">
+                                    <f:selectItems value="#{userSessionMB.user.addressList}" var="address" itemValue="#{address}" itemLabel="#{address}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        
+                        
+
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <div class="pull-right">
+                                    <p:commandButton 
+                                        value="#{label.save}" 
+                                        ajax="false"
+                                        action="#{newAddressMB.save()}" 
+                                        styleClass="btn btn-success btn-flat" 
+                                        icon="fa fa-floppy-o"/>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <p:messages 
+                        globalOnly="false" 
+                        showDetail="true" 
+                        showSummary="false" 
+                        showIcon="true" />
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

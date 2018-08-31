@@ -16,6 +16,20 @@
 
     </style>
     <ul class="nav navbar-nav">
+        <li jsf:rendered="#{userSessionMB.user != null}">
+            <p:link href="/cart.xhtml">
+                <span class="fa fa-shopping-cart"></span>
+                #{label.shoppingCart}
+            </p:link>
+        </li>
+        
+        <li jsf:rendered="#{userSessionMB.user != null}">
+            <p:link href="/new-address.xhtml">
+                <span class="fa fa-location-arrow"></span>
+                #{label.newAddress}
+            </p:link>
+        </li>
+        
         <li class="dropdown user user-menu" jsf:rendered="#{userSessionMB.user != null}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <span class="fa fa-user"></span>

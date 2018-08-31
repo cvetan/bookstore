@@ -87,6 +87,8 @@ public class NewAddressMB implements Serializable {
             
             addressSB.save(address);
             
+            userSessionMB.getUser().getAddressList().add(address);
+            
             String message = ResourceBundleLoader.loadFromClass("messages", "addressSaved");
             
             return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/index?faces-redirect=true");
