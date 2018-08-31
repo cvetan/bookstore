@@ -91,7 +91,7 @@ public class NewAddressMB implements Serializable {
             
             String message = ResourceBundleLoader.loadFromClass("messages", "addressSaved");
             
-            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/index?faces-redirect=true");
+            return Redirector.redirectWithMessage(message, FacesMessage.SEVERITY_INFO, "/new-address?faces-redirect=true");
         } catch (Exception ex) {
             return Redirector.redirectWithMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR, "/new-address?faces-redirect=true");
         }
